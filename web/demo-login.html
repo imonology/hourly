@@ -1,0 +1,59 @@
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<script type="text/javascript" src="/lib/scalra.js"></script>
+<script type="text/javascript" src="logic.js"></script>
+<script>
+
+// retrieve account & password from HTML elements
+function getInput() {
+
+    var account = document.getElementById('account').value; 
+	var email = document.getElementById('email').value; 
+    var password = document.getElementById('password').value;
+	var server = document.getElementById('server').value;
+	
+	return {account: account, email: email, password: password, server: server};	
+}
+
+// allow string to check if it begins with something
+// ref: http://stackoverflow.com/questions/1767246/javascript-check-if-string-begins-with-something
+//String.prototype.startsWith = function (needle) {
+//    return(this.indexOf(needle) == 0);
+//};
+
+var onConnect = function () {
+	console.log('connected to scalra server');
+	
+	SR.API.HelloWorld({name: 'john'}, function (err, result) {
+		if (err) {
+			return alert(err);
+		}
+		console.log(result);
+	});	
+}
+
+</script>
+</head>
+
+<body>
+
+<form name="login" action="" method="GET">
+
+Account: <input type="text" value="" id="account">
+Password: <input type="text" value="" id="password">
+e-mail: <input type="text" value="" id="email">
+<br>
+Remote Server: <input type="text" value="" id="server">
+<br>
+<a href="javascript:login('account', '/web/demo-lobby.html')">Login</a><br>
+<!-- <a href="javascript:login('FB');">FB Login</a><br> -->
+<a href="javascript:login('guest')">Guest Login</a><br>
+<p>
+<a href="javascript:login('getpass')">Forgot Password</a><br>
+<a href="javascript:login('register')">Register</a><br>
+
+</form>
+</body>
+</html>
