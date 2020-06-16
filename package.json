@@ -1,26 +1,27 @@
 {
-  "name": "scalra-demo",
-  "version": "0.0.1",
-  "description": "demo for the Scalra node.js framework",
-  "scripts": {
-    "start": "node lobby/frontier.js"
-  },
-  "keywords": [
-    "prototyping",
-    "prototype",
-    "server",
-    "scaling",
-    "scalability",
-    "API"
-  ],
-  "author": "Imonology Inc. (dev@imonology.com)",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/imonology/scalra/issues"
-  },
-  "homepage": "https://github.com/imonology/scalra",
-  "dependencies": {
-    "scalra": "1.9.2",
-    "scalra-flexform": "*"
-  }
+	"name": "scalra-demo",
+	"version": "0.0.1",
+	"description": "demo for the Scalra node.js framework",
+	"scripts": {
+		"start": "node lobby/frontier.js",
+		"build": "cd ./node_modules/scalra-flexform && npm run build -- --dest $(pwd)/../../dist"
+	},
+	"keywords": [
+		"prototyping",
+		"prototype",
+		"server",
+		"scaling",
+		"scalability",
+		"API"
+	],
+	"author": "Imonology Inc. (dev@imonology.com)",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/imonology/scalra/issues"
+	},
+	"homepage": "https://github.com/imonology/scalra",
+	"dependencies": {
+		"scalra": "1.9.2",
+		"scalra-flexform": "^1.0.31"
+	}
 }
