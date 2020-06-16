@@ -79,3 +79,6 @@ config.inc.js
 
 # node-xmlhttprequest
 .node-xmlhttprequest*
+
+# vue dist files
+dist/
