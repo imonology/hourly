@@ -57,8 +57,8 @@ module.exports = {
 			name: '帳號',
 			type: 'string',
 			desc: '',
-			must: true,
-			show: true,
+			must: false,
+			show: false,
 			required: false,
 		},
 		desc: {
