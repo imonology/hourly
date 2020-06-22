@@ -52,6 +52,40 @@ module.exports = function (app) {
 				],
 			},
 			{
+				path: '/hourly_rate',
+				redirect: '/hourly_rate',
+				name: 'Hourly Rate',
+				meta: {
+					title: 'Hourly rate',
+					icon: 'hourly_rate',
+				},
+				children: [
+					{
+						path: 'create',
+						name: 'Write Hourly Rate',
+						type: 'create',
+						meta: {
+							title: 'Write Hourly Rate',
+							icon: 'hourly_rate',
+							roles: ['admin'],
+						},
+					},
+					{
+						path: 'list',
+						name: 'Hourly Rate List',
+						type: 'list',
+						props: {
+							edit: true,
+						},
+						meta: {
+							title: 'Hourly Rate List',
+							icon: 'edit',
+							roles: ['admin'],
+						},
+					},
+				],
+			},
+			{
 				path: '/info',
 				redirect: '/info',
 				name: '基本資料',
