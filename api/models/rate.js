@@ -12,22 +12,26 @@ module.exports = {
 				{
 					value: 'PM',
 					text: 'PM',
-					id: '1'
+					id: '1',
+					desc: 'Project manager',
 				},
 				{
 					value: 'Dev',
 					text: 'Dev',
-					id: '2'
+					id: '2',
+					desc: 'Developer',
 				},
 				{
 					value: 'Marketing',
 					text: 'Marketing',
-					id: '3'
+					id: '3',
+					desc: 'Marketing',
 				},
 				{
 					value: 'Intern',
 					text: 'Intern',
-					id: '4'
+					id: '4',
+					desc: 'Intern',
 				},
 			],
 		},
