@@ -52,6 +52,40 @@ module.exports = function (app) {
 				],
 			},
 			{
+				path: '/rate',
+				redirect: '/rate',
+				name: 'rate for role',
+				meta: {
+					title: 'rate',
+					icon: 'rate',
+				},
+				children: [
+					{
+						path: 'create',
+						name: 'set rate',
+						type: 'create',
+						meta: {
+							title: 'Set Rate',
+							icon: 'rate',
+							roles: ['admin'],
+						},
+					},
+					{
+						path: 'list',
+						name: 'get rate list',
+						type: 'list',
+						props: {
+							edit: true,
+						},
+						meta: {
+							title: 'Rate List',
+							icon: 'edit',
+							roles: ['admin'],
+						},
+					},
+				],
+			},
+			{
 				path: '/info',
 				redirect: '/info',
 				name: '基本資料',
