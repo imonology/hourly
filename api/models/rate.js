@@ -1,21 +1,35 @@
 module.exports = {
 	name: 'rate',
 	fields: {
-		id:{
-			name: 'id',
-			type: 'number',
-			desc: 'id for each role',
-			must: true,
-			show: false,
-			require: true
-		},
 		roles: { 
 			name: 'roles',
-			type: 'string',
+			type: 'choice',
 			desc: '',
 			must: true,
 			show: true,
-			require: true
+			required: false,
+			option: [
+				{
+					value: 'PM',
+					text: 'PM',
+					id: '1'
+				},
+				{
+					value: 'Dev',
+					text: 'Dev',
+					id: '2'
+				},
+				{
+					value: 'Marketing',
+					text: 'Marketing',
+					id: '3'
+				},
+				{
+					value: 'Intern',
+					text: 'Intern',
+					id: '4'
+				},
+			],
 		},
 		desc: {
 			name: 'description',
