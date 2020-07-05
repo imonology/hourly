@@ -1,15 +1,21 @@
 module.exports = {
 	name: 'account',
 	fields: {
-		region: {
-			name: '區域',
+		gender: {
+			name: 'Gender',
 			type: 'choice',
 			desc: '',
 			must: true,
 			show: true,
 			option: [
-				{ value: 'north', text: '北區' },
-				{ value: 'south', text: '南區' },
+				{
+					value: 'Male',
+					text: '男',
+				},
+				{
+					value: 'Female',
+					text: '女',
+				},
 			],
 		},
 	},

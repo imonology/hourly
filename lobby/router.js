@@ -88,178 +88,195 @@ module.exports = function (app) {
 			{
 				path: '/info',
 				redirect: '/info',
-				name: '基本資料',
+				name: 'info',
 				meta: {
-					title: '基本資料',
-					icon: 'info',
+					title: 'Basic info',
+					icon: 'basic info',
 				},
 				children: [
 					{
-						path: 'create',
-						name: '填寫基本資料',
-						type: 'create',
-						meta: {
-							title: '填寫基本資料',
-							icon: 'user',
-						},
-					},
-					{
 						path: 'list',
-						name: '基本資料清單',
+						name: 'Basic info list',
 						type: 'list',
 						props: {
 							edit: true,
 						},
 						meta: {
-							title: '基本資料清單',
+							title: 'Basic info list',
 							icon: 'edit',
+							roles: ['admin'],
+						},
+					},
+					{
+						path: 'info',
+						name: 'Personal information',
+						type: 'update',
+						props: {
+							edit: true,
+						},
+						meta: {
+							title: 'Personal information',
+							icon: 'edit',
+							// roles: ['c1'], // 此處還需要修改，只能讓登入者看到自己的帳號，且不可刪除
+							/* IMPORTANT: update page needs to upgrade to newest version of flexform (aea2a846) to get this feature below! */
+							schemaUrl: '/api/get_info',
+							submitUrl: '/api/info',
 						},
 					},
 				],
 			},
 			{
-				path: '/green_cert',
-				redirect: '/green_cert',
-				name: '簽核系統',
+				path: '/hourly_rate',
+				redirect: '/hourly_rate',
+				name: 'Hourly Rate',
 				meta: {
-					title: '簽核系統',
-					icon: 'green_cert',
+					title: 'Hourly rate',
+					icon: 'hourly_rate',
 				},
 				children: [
 					{
 						path: 'create',
-						name: '建立表單',
-						type: 'flow_create',
+						name: 'Write Hourly Rate',
+						type: 'create',
 						meta: {
-							title: '簽核系統',
-							icon: 'create',
-						},
-						roles: ['user'],
-					},
-					{
-						path: 'pending',
-						name: '待處理',
-						type: 'flow_pending',
-						meta: {
-							title: '待處理',
-							icon: 'pending',
-							type: 'pending',
-							roles: ['manager', 'c'],
+							title: 'Write Hourly Rate',
+							icon: 'hourly_rate',
+							roles: ['admin'],
 						},
 					},
-					{
-						path: 'done',
-						name: '已結案',
-						type: 'flow_done',
-						meta: {
-							title: '已結案',
-							icon: 'done',
-							type: 'done',
-							roles: ['manager', 'c'],
-						},
-					},
-				],
-			},
-			{
-				path: '/multi_form_flow',
-				redirect: '/multi_form_flow',
-				name: '多表單簽合系統',
-				meta: {
-					title: '多表單簽合系統',
-					icon: 'multi_form_flow',
-				},
-				children: [
-					{
-						path: 'create',
-						name: '建立表單',
-						type: 'flow_create',
-						meta: {
-							title: '案件新增',
-							icon: 'create',
-							type: 'create',
-							flow_name: 'multi_form_flow',
-							roles: ['user'],
-						},
-					},
-					{
-						path: 'pending',
-						name: '待處理',
-						type: 'flow_pending',
-						meta: {
-							title: '待處理',
-							icon: 'pending',
-							type: 'pending',
-							flow_name: 'multi_form_flow',
-							roles: ['manager', 'c'],
-						},
-					},
-					{
-						path: 'processed',
-						name: '簽核中',
-						type: 'flow_processed',
-						meta: {
-							title: '簽核中',
-							icon: 'processed',
-							type: 'processed',
-							flow_name: 'multi_form_flow',
-							roles: ['manager', 'c'],
-						},
-					},
-					{
-						path: 'done',
-						name: '已結案',
-						type: 'flow_done',
-						meta: {
-							title: '已結案',
-							icon: 'done',
-							type: 'done',
-							roles: ['manager', 'c'],
-						},
-					},
-				],
-			},
-			{
-				path: '/flow_list',
-				redirect: '/flow_list',
-				name: '已申請表單',
-				meta: {
-					title: '已申請表單',
-					icon: 'flow_list',
-				},
-				children: [
 					{
 						path: 'list',
-						name: '已申請表單',
-						type: 'flow_user',
+						name: 'Hourly Rate List',
+						type: 'list',
+						props: {
+							edit: true,
+						},
 						meta: {
-							title: '已申請表單',
-							icon: 'list',
-							roles: ['user'],
+							title: 'Hourly Rate List',
+							icon: 'edit',
+							roles: ['admin'],
 						},
 					},
 				],
 			},
 			{
-				path: '/create_flow',
-				name: '建立表單',
-				type: 'flow_create',
-				hidden: true,
+				path: '/case',
+				redirect: '/case',
+				name: 'case',
 				meta: {
-					type: 'create',
-					flow_name: 'multi_form_flow',
+					title: 'Case',
+					icon: 'case',
 				},
+				children: [
+					{
+						path: 'create',
+						name: 'Create case',
+						type: 'update',
+						props: {
+							edit: true,
+						},
+						meta: {
+							title: 'Create case',
+							icon: 'edit',
+							form_name: 'case',
+							isUpdate: false,
+						},
+					},
+					{
+						path: 'list',
+						name: 'Case list',
+						type: 'list',
+						props: {
+							edit: true,
+						},
+						meta: {
+							title: 'Case list',
+							icon: 'edit',
+							roles: ['admin', 'PM'],
+							extra_btn: [
+								{
+									name: '新增開發週期',
+									button_name: '新增',
+									path: 'add_cycles', // 後面加上的網址
+									para: ['record_id'], // 新增的參數
+								},
+							],
+						},
+					},
+				],
 			},
 			{
-				path: '/sample',
-				name: 'sample',
-				hidden: true,
-				type: 'create',
+				path: '/dev_cycles',
+				redirect: '/dev_cycles',
+				name: 'dev_cycles',
 				meta: {
-					schemaUrl: '/api/document/schema',
-					submitUrl: '/api/document',
+					title: 'Dev cycles',
+					icon: 'Dev cycles',
 				},
+				children: [
+					{
+						path: 'create',
+						name: 'Create cycle',
+						type: 'update',
+						props: {
+							edit: true,
+						},
+						meta: {
+							title: 'Create cycle',
+							icon: 'edit',
+							form_name: 'dev_cycles',
+							isUpdate: false,
+						},
+					},
+					{
+						path: 'list',
+						name: 'Dev cycles',
+						type: 'list',
+						props: {
+							edit: true,
+						},
+						meta: {
+							title: 'Dev cycles',
+							icon: 'edit',
+							roles: ['admin', 'PM'],
+						},
+					},
+				],
 			},
 		];
 		res.send(menu);
+	});
+
+	app.get('/api/get_info', (req, res, next) => {
+		let controller = new SR.Flexform.controller('info');
+		const found_account = l_checkLogin(req).account;
+
+		controller.findOne({ query: { account: found_account } });
+
+		if (Object.keys(controller.data.values).length === 0) {
+			controller = JSON.parse(JSON.stringify(controller.find()));
+			controller.data.values = {};
+		}
+
+		res.send(controller);
+	});
+
+	app.patch('/api/info', (req, res, next) => {
+		let controller = new SR.Flexform.controller('info');
+
+		const found_account = l_checkLogin(req).account;
+		controller.findOne({ query: { account: found_account } });
+
+		let record_id = Object.keys(controller.data.values)[0];
+
+		const updateData = req.body;
+		updateData.record_id = record_id;
+		if (record_id) {
+			controller.update(updateData);
+		} else {
+			updateData.values.account = found_account;
+			controller.create(updateData.values).then;
+		}
+		res.send(controller);
 	});
 };
