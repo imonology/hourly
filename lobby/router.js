@@ -159,6 +159,90 @@ module.exports = function (app) {
 					},
 				],
 			},
+			{
+				path: '/case',
+				redirect: '/case',
+				name: 'case',
+				meta: {
+					title: 'Case',
+					icon: 'case',
+				},
+				children: [
+					{
+						path: 'create',
+						name: 'Create case',
+						type: 'update',
+						props: {
+							edit: true,
+						},
+						meta: {
+							title: 'Create case',
+							icon: 'edit',
+							form_name: 'case',
+							isUpdate: false,
+						},
+					},
+					{
+						path: 'list',
+						name: 'Case list',
+						type: 'list',
+						props: {
+							edit: true,
+						},
+						meta: {
+							title: 'Case list',
+							icon: 'edit',
+							roles: ['admin', 'PM'],
+							extra_btn: [
+								{
+									name: '新增開發週期',
+									button_name: '新增',
+									path: 'add_cycles', // 後面加上的網址
+									para: ['record_id'], // 新增的參數
+								},
+							],
+						},
+					},
+				],
+			},
+			{
+				path: '/dev_cycles',
+				redirect: '/dev_cycles',
+				name: 'dev_cycles',
+				meta: {
+					title: 'Dev cycles',
+					icon: 'Dev cycles',
+				},
+				children: [
+					{
+						path: 'create',
+						name: 'Create cycle',
+						type: 'update',
+						props: {
+							edit: true,
+						},
+						meta: {
+							title: 'Create cycle',
+							icon: 'edit',
+							form_name: 'dev_cycles',
+							isUpdate: false,
+						},
+					},
+					{
+						path: 'list',
+						name: 'Dev cycles',
+						type: 'list',
+						props: {
+							edit: true,
+						},
+						meta: {
+							title: 'Dev cycles',
+							icon: 'edit',
+							roles: ['admin', 'PM'],
+						},
+					},
+				],
+			},
 		];
 		res.send(menu);
 	});
