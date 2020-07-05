@@ -1,8 +1,8 @@
 module.exports = {
 	name: '每小時費用',
 	fields: {
-		name: {
-			name: '項目名稱',
+		role: {
+			name: '身份別',
 			type: 'string',
 			desc: '',
 			unique: true,
@@ -10,7 +10,7 @@ module.exports = {
 			show: true,
 			required: true,
 		},
-		person_id: {
+		hourly_rate: {
 			name: '費用',
 			type: 'number',
 			desc: '',
