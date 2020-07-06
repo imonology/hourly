@@ -21,7 +21,7 @@
 	},
 	"homepage": "https://github.com/imonology/scalra",
 	"dependencies": {
-		"scalra": "^1.9.2",
+		"scalra": "^1.9.3",
 		"scalra-flexform": "^1.0.31"
 	}
 }

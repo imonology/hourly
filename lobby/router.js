@@ -86,12 +86,12 @@ module.exports = function (app) {
 				],
 			},
 			{
-				path: '/open_project',
-				redirect: '/open_project',
-				name: 'open project',
+				path: '/project',
+				redirect: '/project',
+				name: 'project',
 				meta: {
-					title: 'Open Project',
-					icon: 'open_project',
+					title: 'Project',
+					icon: 'project',
 				},
 				children: [
 					{
@@ -100,7 +100,7 @@ module.exports = function (app) {
 						type: 'create',
 						meta: {
 							title: 'Set Project',
-							icon: 'open_project',
+							icon: 'project',
 							roles: ['admin','pm'],
 						},
 					},
