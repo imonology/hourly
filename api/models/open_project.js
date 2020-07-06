@@ -1,13 +1,13 @@
 module.exports = {
-	name: 'rate',
+	name: 'project define',
 	fields: {
-		roles: { 
-			name: 'role',
+		project_name: { 
+			name: 'project name',
 			type: 'string',
 			desc: '',
 			must: true,
 			show: true,
-			required: false,
+			required: true,
 			unique: true,
 		},
 		desc: {
@@ -18,15 +18,6 @@ module.exports = {
 			must: true,
 			show: true,
 			require: false
-		},
-		pay: {
-			name: 'pay for role',
-			type: 'number',
-			desc: '',
-			must: true,
-			show: true,
-			require: true,
-			unique: true,
 		}
 	}
 };

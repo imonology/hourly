@@ -86,6 +86,40 @@ module.exports = function (app) {
 				],
 			},
 			{
+				path: '/open_project',
+				redirect: '/open_project',
+				name: 'open project',
+				meta: {
+					title: 'Open Project',
+					icon: 'open_project',
+				},
+				children: [
+					{
+						path: 'create',
+						name: 'set project',
+						type: 'create',
+						meta: {
+							title: 'Set Rate',
+							icon: 'rate',
+							roles: ['admin','pm'],
+						},
+					},
+					{
+						path: 'list',
+						name: 'get project list',
+						type: 'list',
+						props: {
+							edit: true,
+						},
+						meta: {
+							title: 'Project List',
+							icon: 'edit',
+							roles: ['admin','pm'],
+						},
+					},
+				],
+			},
+			{
 				path: '/info',
 				redirect: '/info',
 				name: 'info',
