@@ -20,27 +20,39 @@ module.exports = {
 			require: false
 		},
 		sub_data: {
-			name: 'Add more members',
+			name: 'Add members',
 			type: 'sub_model',
 			must: false,
 			show: true,
 			required: false,
 			forbid_delete: false,
 			fields: {
-				member: {
-					name: 'Member',
+				data2: {
+					name: '文件項目',
 					type: 'choice',
 					desc: '',
 					must: true,
 					show: true,
 					required: false,
-					option: {
-						form: '_account',
-						query: {},
-						value: 'account',
-						text: 'name'
-					},
-				}
+					option: [
+						{
+							value: 'category1',
+							text: '類別1',
+						},
+						{
+							value: 'category2',
+							text: '類別2',
+						},
+					],
+				},
+				data3: {
+					name: 'Member',
+					type: 'string',
+					desc: '',
+					must: true,
+					show: true,
+					required: false,
+				},
 			},
 		},
 	}
