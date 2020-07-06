@@ -20,7 +20,7 @@ module.exports = {
 			require: false
 		},
 		sub_data: {
-			name: 'Add members',
+			name: '多筆資料',
 			type: 'sub_model',
 			must: false,
 			show: true,
@@ -28,7 +28,28 @@ module.exports = {
 			forbid_delete: false,
 			fields: {
 				data1: {
-					name: 'choice',
+					name: '單據名',
+					type: 'string',
+					desc: '',
+					must: true,
+					show: true,
+					required: true,
+					validator: `{
+						message: '你必須是 CCC',
+						validator: (rule, value, callback) => {
+							console.log('開始驗證');
+							console.log(value);
+							if (value !== 'CCC') {
+								callback(new Error('error'));
+							} else {
+								callback();
+							}
+						},
+						required: true,
+					}`,
+				},
+				data2: {
+					name: '文件項目',
 					type: 'choice',
 					desc: '',
 					must: true,
@@ -45,14 +66,23 @@ module.exports = {
 						},
 					],
 				},
-				data2: {
-					name: 'Member',
+				data3: {
+					name: '文件描述1',
 					type: 'string',
 					desc: '',
 					must: true,
 					show: true,
 					required: false,
-				}
+				},
+				boo3: {
+					name: '是否',
+					type: 'boolean',
+					shape: 'checkbox',
+					desc: '',
+					must: false,
+					show: true,
+					required: false,
+				},
 			},
 		},
 	}
