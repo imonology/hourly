@@ -99,8 +99,8 @@ module.exports = function (app) {
 						name: 'set project',
 						type: 'create',
 						meta: {
-							title: 'Set Rate',
-							icon: 'rate',
+							title: 'Set Project',
+							icon: 'open_project',
 							roles: ['admin','pm'],
 						},
 					},

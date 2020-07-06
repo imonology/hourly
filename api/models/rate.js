@@ -7,7 +7,7 @@ module.exports = {
 			desc: '',
 			must: true,
 			show: true,
-			required: false,
+			required: true,
 			unique: true,
 		},
 		desc: {
