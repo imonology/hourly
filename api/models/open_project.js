@@ -27,8 +27,8 @@ module.exports = {
 			required: false,
 			forbid_delete: false,
 			fields: {
-				data2: {
-					name: '文件項目',
+				data1: {
+					name: 'choice',
 					type: 'choice',
 					desc: '',
 					must: true,
@@ -45,14 +45,14 @@ module.exports = {
 						},
 					],
 				},
-				data3: {
+				data2: {
 					name: 'Member',
 					type: 'string',
 					desc: '',
 					must: true,
 					show: true,
 					required: false,
-				},
+				}
 			},
 		},
 	}
