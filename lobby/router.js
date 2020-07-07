@@ -85,6 +85,7 @@ module.exports = function (app) {
 					},
 				],
 			},
+			
 			{
 				path: '/project',
 				redirect: '/project',
@@ -96,25 +97,64 @@ module.exports = function (app) {
 				children: [
 					{
 						path: 'create',
-						name: 'set project',
-						type: 'create',
+						name: 'Create project',
+						type: 'update',
+						props: {
+							edit: true,
+						},
 						meta: {
-							title: 'Set Project',
-							icon: 'project',
-							roles: ['admin','pm'],
+							title: 'Create project',
+							icon: 'edit',
+							form_name: 'project',
+							isUpdate: false,
 						},
 					},
 					{
 						path: 'list',
-						name: 'get project list',
+						name: 'Project list',
 						type: 'list',
 						props: {
 							edit: true,
 						},
 						meta: {
-							title: 'Project List',
+							title: 'Project list',
 							icon: 'edit',
-							roles: ['admin','pm'],
+							roles: ['admin', 'PM'],
+							
+						},
+					},
+				],
+			},
+			{
+				path: '/dev_cycles_custom',
+				redirect: '/dev_cycles_custom',
+				name: 'Cycle dev',
+				meta: {
+					title: 'Dev Cycles',
+					icon: 'dev_cycles_custom',
+				},
+				children: [
+					{
+						path: 'create',
+						name: 'set cycle',
+						type: 'create',
+						meta: {
+							title: 'Set Cycle',
+							icon: 'dev_cycles_custom',
+							roles: ['admin','PM'],
+						},
+					},
+					{
+						path: 'list',
+						name: 'get cycle list',
+						type: 'list',
+						props: {
+							edit: true,
+						},
+						meta: {
+							title: 'Cycle List',
+							icon: 'edit',
+							roles: ['admin','PM'],
 						},
 					},
 				],
@@ -176,6 +216,7 @@ module.exports = function (app) {
 							title: 'Write Hourly Rate',
 							icon: 'hourly_rate',
 							roles: ['admin'],
+							
 						},
 					},
 					{
