@@ -1,8 +1,8 @@
 module.exports = {
-	name: '案件',
+	name: 'Case',
 	fields: {
 		applicant: {
-			name: '案件名稱',
+			name: 'Case name',
 			type: 'string',
 			desc: '',
 			must: true,
@@ -10,7 +10,7 @@ module.exports = {
 			required: true,
 		},
 		pm_hour: {
-			name: 'PM 時數',
+			name: 'PM Hours',
 			type: 'number',
 			desc: '',
 			must: true,
@@ -18,7 +18,7 @@ module.exports = {
 			required: false,
 		},
 		dev_hour: {
-			name: 'Dev 時數',
+			name: 'Dev Hours',
 			type: 'number',
 			desc: '',
 			must: true,
@@ -26,7 +26,7 @@ module.exports = {
 			required: false,
 		},
 		sub_data: {
-			name: '多筆資料',
+			name: 'Multiple data',
 			type: 'sub_model',
 			must: false,
 			show: true,
@@ -34,7 +34,7 @@ module.exports = {
 			forbid_delete: false,
 			fields: {
 				data1: {
-					name: '單據名',
+					name: 'Document name',
 					type: 'string',
 					desc: '',
 					must: true,
@@ -55,7 +55,7 @@ module.exports = {
 					}`,
 				},
 				data2: {
-					name: '文件項目',
+					name: 'Document project',
 					type: 'choice',
 					desc: '',
 					must: true,
@@ -64,16 +64,16 @@ module.exports = {
 					option: [
 						{
 							value: 'category1',
-							text: '類別1',
+							text: 'Category 1',
 						},
 						{
 							value: 'category2',
-							text: '類別2',
+							text: 'Category 2',
 						},
 					],
 				},
 				data3: {
-					name: '文件描述1',
+					name: 'Document description',
 					type: 'string',
 					desc: '',
 					must: true,
@@ -81,7 +81,7 @@ module.exports = {
 					required: false,
 				},
 				boo3: {
-					name: '是否',
+					name: 'Whether',
 					type: 'boolean',
 					shape: 'checkbox',
 					desc: '',

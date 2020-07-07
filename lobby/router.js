@@ -160,6 +160,30 @@ module.exports = function (app) {
 				],
 			},
 			{
+				path: '/track_project',
+				redirect: '/track_project',
+				name: 'Track project',
+				meta: {
+					title: 'Track project',
+					icon: 'track_project',
+				},
+				children: [
+					{
+						path: 'list',
+						name: 'get track list',
+						type: 'list',
+						props: {
+							edit: false,
+						},
+						meta: {
+							title: 'Track List',
+							icon: 'edit',
+							roles: [],
+						},
+					},
+				],
+			},
+			{
 				path: '/info',
 				redirect: '/info',
 				name: 'info',
