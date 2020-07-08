@@ -107,6 +107,7 @@ module.exports = function (app) {
 							icon: 'edit',
 							form_name: 'project',
 							isUpdate: false,
+							roles: ['admin'],
 						},
 					},
 					{
@@ -119,8 +120,7 @@ module.exports = function (app) {
 						meta: {
 							title: 'Project list',
 							icon: 'edit',
-							roles: ['admin', 'PM'],
-							
+							roles: ['admin'],
 						},
 					},
 				],

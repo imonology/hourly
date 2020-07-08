@@ -13,11 +13,18 @@ module.exports = {
 		desc: {
 			name: 'Description',
 			type: 'textarea',
-			row: 5,
+			row: 3,
 			desc: '',
 			must: true,
 			show: true,
 			require: false
+		},
+		dev_cycles: {
+			name: 'Dev Cycles',
+			model: 'dev_cycles_custom',
+			desc: '',
+			show: true,
+			option_text: 'project'
 		},
 		PM: {
 			name: 'Project Manager',
@@ -25,23 +32,41 @@ module.exports = {
 			desc: '',
 			show: true,
 			require: true
-		},		
-		sub_data: {
-			name: 'Team',
-			type: 'sub_model',
-			must: false,
-			show: true,
-			required: false,
-			forbid_delete: false,
-			fields: {
-				dev: {
-					name: 'developers',
-					model: '_account',
-					desc: '',
-					show: true,
-					required: false,
-				},
-			},
 		},
+		client1: {
+			name: 'Client 1',
+			model: '_account',
+			desc: '',
+			show: true,
+			require: true
+		},
+		client2: {
+			name: 'Client 2',
+			model: '_account',
+			desc: '',
+			show: true,
+			require: true
+		},
+		dev1: {
+			name: 'developer 1',
+			model: '_account',
+			desc: '',
+			show: true,
+			require: true
+		},
+		dev2: {
+			name: 'developer 2',
+			model: '_account',
+			desc: '',
+			show: true,
+			require: true
+		},	
+		dev3: {
+			name: 'developer 3',
+			model: '_account',
+			desc: '',
+			show: true,
+			require: true
+		},	
 	}
 };
