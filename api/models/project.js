@@ -19,19 +19,25 @@ module.exports = {
 			show: true,
 			require: false
 		},
+		PM: {
+			name: 'Project Manager',
+			model: '_account',
+			desc: '',
+			show: true,
+			require: true
+		},		
 		sub_data: {
-			name: 'Add members',
+			name: 'Team',
 			type: 'sub_model',
 			must: false,
 			show: true,
 			required: false,
 			forbid_delete: false,
 			fields: {
-				data3: {
-					name: 'Members',
-					type: 'string',
+				dev: {
+					name: 'developers',
+					model: '_account',
 					desc: '',
-					must: true,
 					show: true,
 					required: false,
 				},
