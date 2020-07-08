@@ -169,6 +169,16 @@ module.exports = function (app) {
 				},
 				children: [
 					{
+						path: 'create',
+						name: 'set tracking',
+						type: 'create',
+						meta: {
+							title: 'Set Track',
+							icon: 'rate',
+							roles: ['dev'],
+						},
+					},
+					{
 						path: 'list',
 						name: 'get track list',
 						type: 'list',
@@ -178,7 +188,48 @@ module.exports = function (app) {
 						meta: {
 							title: 'Track List',
 							icon: 'edit',
-							roles: [],
+							roles: ['admin'],
+							extra_btn: [
+								{
+									name: 'check',
+									path: 'add_log',
+									para: ['boolean'], 
+								},
+							],
+						},
+					},
+				],
+			},
+			{
+				path: '/salary_sheet',
+				redirect: '/salary_sheet',
+				name: 'Salary track',
+				meta: {
+					title: 'Salary',
+					icon: 'salary_sheet',
+				},
+				children: [
+					{
+						path: 'create',
+						name: 'set salary',
+						type: 'create',
+						meta: {
+							title: 'Set Salary',
+							icon: 'rate',
+							roles: ['dev'],
+						},
+					},
+					{
+						path: 'list',
+						name: 'get salary list',
+						type: 'list',
+						props: {
+							edit: false,
+						},
+						meta: {
+							title: 'Salary List',
+							icon: 'edit',
+							roles: ['admin'],
 						},
 					},
 				],

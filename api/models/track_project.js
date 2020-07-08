@@ -1,7 +1,7 @@
 module.exports = {
 	name: 'track project',
 	fields: {
-		project: { 
+		role: { 
 			name: 'Project',
 			type: 'string',
 			desc: '',
@@ -13,25 +13,62 @@ module.exports = {
 			name: 'Member',
 			type: 'number',
 			desc: '',
-			must: true,
-			show: true,
-			require: true,
+			must: false,
+			show: false,
 		},
-		dev_cycle: { 
-			name: 'Hour work',
-			type: 'number',
+		special_price_setting: {
+			name: 'Pricing settings',
+			type: 'choice',
 			desc: '',
 			must: true,
 			show: true,
 			required: true,
+			option: [
+				{
+					value: 'Whether the price',
+					text: 'Whether the price',
+				},
+				{
+					value: 'Overtime',
+					text: 'Overtime',
+				},
+			],
 		},
-		budget: {
-			name: 'Budget',
-			type: 'number',
+		Starting_time: {
+			name: 'Starting time',
+			type: 'datetime',
+			must: true,
+			show: true,
+		},
+		End_time: {
+			name: 'End Time',
+			type: 'datetime',
+			must: true,
+			show: true,
+		},
+		Complete_the_project:{
+			name: 'Complete project',
+			type: 'textarea',
+			row: 5,
 			desc: '',
 			must: true,
 			show: true,
-			required: true,
+		},
+		Remarks:{
+			name: 'Remarks',
+			type: 'textarea',
+			row: 5,
+			desc: '',
+			must: true,
+			show: true,
+		},
+		To_do:{
+			name: 'To do',
+			type: 'textarea',
+			row: 5,
+			desc: '',
+			must: true,
+			show: true,
 		}
 	}
 };
