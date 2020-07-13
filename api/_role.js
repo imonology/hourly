@@ -14,6 +14,6 @@ module.exports = [
 	},
 	{
 		name: 'developer',
-		label: 'Developer',
+		label: 'developer',
 	},
 ];

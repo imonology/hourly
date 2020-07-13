@@ -80,7 +80,20 @@ module.exports = function (app) {
 						meta: {
 							title: 'Rate List',
 							icon: 'edit',
-							roles: ['admin'],
+							roles: ['admin','client','pm','dev'],
+						},
+					},
+					{
+						path: 'list',
+						name: 'get rate list',
+						type: 'list',
+						props: {
+							edit: false,
+						},
+						meta: {
+							title: 'Rate List',
+							icon: 'edit',
+							roles: ['admin','client','pm','dev'],
 						},
 					},
 				],
@@ -107,7 +120,7 @@ module.exports = function (app) {
 							icon: 'edit',
 							form_name: 'project',
 							isUpdate: false,
-							roles: ['admin'],
+							roles: ['admin','pm'],
 						},
 					},
 					{
@@ -120,7 +133,20 @@ module.exports = function (app) {
 						meta: {
 							title: 'Project list',
 							icon: 'edit',
-							roles: ['admin'],
+							roles: ['admin','pm'],
+						},
+					},
+					{
+						path: 'list',
+						name: 'Project list dev',
+						type: 'list',
+						props: {
+							edit: false,
+						},
+						meta: {
+							title: 'Project list',
+							icon: 'edit',
+							roles: ['dev','client'],
 						},
 					},
 				],
@@ -141,7 +167,7 @@ module.exports = function (app) {
 						meta: {
 							title: 'Set Cycle',
 							icon: 'dev_cycles_custom',
-							roles: ['admin','PM'],
+							roles: ['admin'],
 						},
 					},
 					{
@@ -154,7 +180,20 @@ module.exports = function (app) {
 						meta: {
 							title: 'Cycle List',
 							icon: 'edit',
-							roles: ['admin','PM'],
+							roles: ['admin'],
+						},
+					},
+					{
+						path: 'info',
+						name: 'get cycle list',
+						type: 'list',
+						props: {
+							edit: false,
+						},
+						meta: {
+							title: 'Cycle List Dev',
+							icon: 'list',
+							roles: ['dev','pm','client'],
 						},
 					},
 				],
@@ -188,7 +227,7 @@ module.exports = function (app) {
 						meta: {
 							title: 'Track List',
 							icon: 'edit',
-							roles: ['admin'],
+							roles: ['admin','pm'],
 							extra_btn: [
 								{
 									name: 'check',
@@ -196,6 +235,19 @@ module.exports = function (app) {
 									para: ['boolean'], 
 								},
 							],
+						},
+					},
+					{
+						path: 'list',
+						name: 'get track list',
+						type: 'list',
+						props: {
+							edit: false,
+						},
+						meta: {
+							title: 'Track List',
+							icon: 'edit',
+							roles: ['dev','client'],
 						},
 					},
 				],
@@ -216,7 +268,7 @@ module.exports = function (app) {
 						meta: {
 							title: 'Set Salary',
 							icon: 'rate',
-							roles: ['dev'],
+							roles: ['admin'],
 						},
 					},
 					{
@@ -396,7 +448,22 @@ module.exports = function (app) {
 		];
 		res.send(menu);
 	});
-	
+	app.get('/api/analysis',  (req, res)=> {
+		// var login = l_checkLogin(req);
+		// console.log(login)
+		// if (!login.account)
+		// 	return res.redirect('/');
+
+		var para = {
+			// login: login,
+			language: l_lang,
+			// role: l_accounts[login.account].control.groups[0],
+			// admin: l_accounts[login.account].control.groups.includes('administrator'),
+			// account: login.account
+		};
+
+		res.render('analysis',para);
+	});
 	
 	app.get('/api/get_info', (req, res, next) => {
 		let controller = new SR.Flexform.controller('info');
@@ -416,6 +483,7 @@ module.exports = function (app) {
 		let controller = new SR.Flexform.controller('info');
 
 		const found_account = l_checkLogin(req).account;
+		
 		controller.findOne({ query: { account: found_account } });
 
 		let record_id = Object.keys(controller.data.values)[0];
@@ -430,20 +498,6 @@ module.exports = function (app) {
 		}
 		res.send(controller);
 	});
-	app.get('/analysis', function (req, res) {
-		// var login = l_checkLogin(req);
-		// if (!login.account)
-		// 	return res.redirect('/');
-
-		var para = {
-			// login: login,
-			language: l_lang,
-			// role: l_accounts[login.account].control.groups[0],
-			// admin: l_accounts[login.account].control.groups.includes('administrator'),
-			// account: login.account
-		};
-
-		res.render('test_analysis',para);
-	});
+	
 	
 };
