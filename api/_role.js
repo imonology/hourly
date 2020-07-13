@@ -1,16 +1,16 @@
 module.exports = [
 	{
 		name: 'admin',
-		label: '管理員',
+		label: 'admin',
 	},
 	{
 		name: 'client',
-		label: '使用者',
+		label: 'client',
 		default: true,
 	},
 	{
-		name: 'PM',
-		label: 'PM',
+		name: 'pm',
+		label: 'pm',
 	},
 	{
 		name: 'developer',

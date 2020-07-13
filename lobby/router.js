@@ -396,7 +396,8 @@ module.exports = function (app) {
 		];
 		res.send(menu);
 	});
-
+	
+	
 	app.get('/api/get_info', (req, res, next) => {
 		let controller = new SR.Flexform.controller('info');
 		const found_account = l_checkLogin(req).account;
@@ -429,4 +430,20 @@ module.exports = function (app) {
 		}
 		res.send(controller);
 	});
+	app.get('/analysis', function (req, res) {
+		// var login = l_checkLogin(req);
+		// if (!login.account)
+		// 	return res.redirect('/');
+
+		var para = {
+			// login: login,
+			language: l_lang,
+			// role: l_accounts[login.account].control.groups[0],
+			// admin: l_accounts[login.account].control.groups.includes('administrator'),
+			// account: login.account
+		};
+
+		res.render('test_analysis',para);
+	});
+	
 };

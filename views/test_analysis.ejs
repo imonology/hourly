@@ -1,0 +1,96 @@
+<% layout('template/common') %>
+<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"> 
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<style>
+	.week {
+		color: #000 !important;
+	}
+	.warning {
+		color: red !important;
+	}
+	#warning_area {
+		margin-bottom: 3rem;
+		padding: 1rem;
+		border: 1px solid orangered;
+		border-radius: 10px;
+		font-size: 1.8rem;
+		width: 100%;
+		background: linear-gradient(rgba(255, 255, 255, 0.05),rgba(255, 255, 255, 0.05)),#1E2832;
+	}
+	#warning_title {
+		padding-bottom: 0.5rem;
+	}
+	.unconfirmed_title {
+		font-weight:bold;
+		width: 50%;
+		display: inline-block;
+		text-align: right;
+	}
+	.unconfirmed_hours {
+		color: coral;
+		width: 50%;
+		text-align: left;
+		display: inline-block;
+	}
+</style>
+<section id="three" class="wrapper style2 special">
+	<div class="inner">
+		<header class="major narrow">
+			<h2>時數統計</h2>
+		</header>
+		<div>
+			<ul class="pagination">
+				<li class="active tab-type" data-type="provider">
+					<a href="#" aria-label="Previous">
+						<span aria-hidden="true">依開發者</span>
+					</a>
+				</li>
+				<li class="tab-type" data-type="project">
+					<a href="#" aria-label="Previous">
+						<span aria-hidden="true">依專案</span>
+					</a>
+				</li>
+				<li class="tab-type" data-type="pay_settlement">
+					<a href="#" aria-label="Previous">
+						<span aria-hidden="true">薪資結算</span>
+					</a>
+				</li>
+			</ul>
+		</div>
+		<h3 id="warning_title" class="hide warning">重要</h3>
+		<div id="warning_area" class="hide">
+		</div>
+		<div>
+			<input type="radio" id="choice_week" class="select_type" name="select_type" value="choice_week">
+			<label for="choice_week">選擇週次</label>
+			<input type="radio" id="choice_month" class="select_type" name="select_type" value="choice_month">
+			<label for="choice_month">選擇月份</label>
+		</div>
+
+
+		<div id="week_area">
+			<input type="week" class="week" id="select_week">
+		</div>
+		<div id="month_area">
+			<select class="year" style="display: inline; width: 150px"></select> 
+			<select class="month" style="display: inline; width: 150px"></select>
+		</div>
+		<div id="select_company">
+			<br>
+			選擇公司： 
+			<select class="company" style="display: inline; width: 150px"></select> 
+		</div>
+		<div style="padding-top: 25px">
+			<div class="hourList"></div>
+			<div class="Logs hide" style="margin-bottom: 20px">
+				<h4 class="Logs__title"></h4>
+				<div class="Logs__content"></div>
+			</div>
+			<ul class="actions">
+				<li><a class="button special" href="javascript:window.history.back();">回上一頁</a></li>
+				<li><a class="button special" href="/main">回主畫面</a></li>
+			</ul>
+		</div>
+	</div>
+</section>
+<script></script>
