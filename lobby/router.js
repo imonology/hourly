@@ -51,54 +51,40 @@ module.exports = function (app) {
 					},
 				],
 			},
-			{
-				path: '/rate',
-				redirect: '/rate',
-				name: 'rate for role',
-				meta: {
-					title: 'rate',
-					icon: 'rate',
-				},
-				children: [
-					{
-						path: 'create',
-						name: 'set rate',
-						type: 'create',
-						meta: {
-							title: 'Set Rate',
-							icon: 'rate',
-							roles: ['admin'],
-						},
-					},
-					{
-						path: 'list',
-						name: 'get rate list',
-						type: 'list',
-						props: {
-							edit: true,
-						},
-						meta: {
-							title: 'Rate List',
-							icon: 'edit',
-							roles: ['admin','client','pm','dev'],
-						},
-					},
-					{
-						path: 'list',
-						name: 'get rate list',
-						type: 'list',
-						props: {
-							edit: false,
-						},
-						meta: {
-							title: 'Rate List',
-							icon: 'edit',
-							roles: ['admin','client','pm','dev'],
-						},
-					},
-				],
-			},
-			
+			// {
+			// 	path: '/rate',
+			// 	redirect: '/rate',
+			// 	name: 'rate for role',
+			// 	meta: {
+			// 		title: 'Rate test',
+			// 		icon: 'rate',
+			// 	},
+			// 	children: [
+			// 		{
+			// 			path: 'create',
+			// 			name: 'set rate',
+			// 			type: 'create',
+			// 			meta: {
+			// 				title: 'Set Rate',
+			// 				icon: 'rate',
+			// 				roles: [],
+			// 			},
+			// 		},
+			// 		{
+			// 			path: 'list',
+			// 			name: 'get rate list',
+			// 			type: 'list',
+			// 			props: {
+			// 				edit: true,
+			// 			},
+			// 			meta: {
+			// 				title: 'Rate List',
+			// 				icon: 'edit',
+			// 				roles: ['client','pm','dev'],
+			// 			},
+			// 		},
+			// 	],
+			// },
 			{
 				path: '/project',
 				redirect: '/project',
@@ -111,7 +97,7 @@ module.exports = function (app) {
 					{
 						path: 'create',
 						name: 'Create project',
-						type: 'update',
+						type: 'create',
 						props: {
 							edit: true,
 						},
@@ -120,7 +106,7 @@ module.exports = function (app) {
 							icon: 'edit',
 							form_name: 'project',
 							isUpdate: false,
-							roles: ['admin','pm'],
+							roles: ['pm'],
 						},
 					},
 					{
@@ -133,78 +119,65 @@ module.exports = function (app) {
 						meta: {
 							title: 'Project list',
 							icon: 'edit',
-							roles: ['admin','pm'],
-						},
-					},
-					{
-						path: 'list',
-						name: 'Project list dev',
-						type: 'list',
-						props: {
-							edit: false,
-						},
-						meta: {
-							title: 'Project list',
-							icon: 'edit',
-							roles: ['dev','client'],
+							roles: ['pm', 'admin', 'client'],
 						},
 					},
 				],
 			},
-			{
-				path: '/dev_cycles_custom',
-				redirect: '/dev_cycles_custom',
-				name: 'Cycle dev',
-				meta: {
-					title: 'Dev Cycles',
-					icon: 'dev_cycles_custom',
-				},
-				children: [
-					{
-						path: 'create',
-						name: 'set cycle',
-						type: 'create',
-						meta: {
-							title: 'Set Cycle',
-							icon: 'dev_cycles_custom',
-							roles: ['admin'],
-						},
-					},
-					{
-						path: 'list',
-						name: 'get cycle list',
-						type: 'list',
-						props: {
-							edit: true,
-						},
-						meta: {
-							title: 'Cycle List',
-							icon: 'edit',
-							roles: ['admin'],
-						},
-					},
-					{
-						path: 'info',
-						name: 'get cycle list',
-						type: 'list',
-						props: {
-							edit: false,
-						},
-						meta: {
-							title: 'Cycle List Dev',
-							icon: 'list',
-							roles: ['dev','pm','client'],
-						},
-					},
-				],
-			},
+			// {
+			// 	path: '/dev_cycles_custom',
+			// 	redirect: '/dev_cycles_custom',
+			// 	name: 'Cycle dev',
+			// 	meta: {
+			// 		title: 'Dev Cycles',
+			// 		icon: 'dev_cycles_custom',
+			// 	},
+			// 	children: [
+			// 		{
+			// 			path: 'create',
+			// 			name: 'set cycle',
+			// 			type: 'create',
+			// 			meta: {
+			// 				title: 'Set Cycle',
+			// 				icon: 'dev_cycles_custom',
+			// 				roles: ['admin'],
+			// 			},
+			// 		},
+			// 		// {
+			// 		// 	path: 'list',
+			// 		// 	name: 'get cycle list',
+			// 		// 	type: 'list',
+			// 		// 	props: {
+			// 		// 		edit: true,
+			// 		// 	},
+			// 		// 	meta: {
+			// 		// 		title: 'Cycle List',
+			// 		// 		icon: 'edit',
+			// 		// 		roles: ['admin'],
+			// 		// 	},
+			// 		// },
+			// 		{
+			// 			path: 'info',
+			// 			name: 'get cycle list',
+			// 			type: 'list',
+			// 			props: {
+			// 				edit: false,
+			// 			},
+			// 			meta: {
+			// 				title: 'Cycle List Dev',
+			// 				icon: 'list',
+			// 				roles: ['dev','pm','client'],
+			// 			},
+			// 		},
+			// 	],
+			// },
 			{
 				path: '/track_project',
 				redirect: '/track_project',
-				name: 'Track project',
+				name: 'Progress',
 				meta: {
-					title: 'Track project',
-					icon: 'track_project',
+					title: 'Progress',
+					icon: 'progress',
 				},
 				children: [
 					{
@@ -214,20 +187,20 @@ module.exports = function (app) {
 						meta: {
 							title: 'Set Track',
 							icon: 'rate',
-							roles: ['dev'],
+							roles: ['developer'],
 						},
 					},
 					{
 						path: 'list',
 						name: 'get track list',
 						type: 'list',
-						props: {
-							edit: false,
-						},
+						// props: {
+						// 	edit: false,
+						// },
 						meta: {
 							title: 'Track List',
 							icon: 'edit',
-							roles: ['admin','pm'],
+							roles: ['pm', 'admin', 'client'],
 							extra_btn: [
 								{
 									name: 'check',
@@ -235,19 +208,6 @@ module.exports = function (app) {
 									para: ['boolean'], 
 								},
 							],
-						},
-					},
-					{
-						path: 'list',
-						name: 'get track list',
-						type: 'list',
-						props: {
-							edit: false,
-						},
-						meta: {
-							title: 'Track List',
-							icon: 'edit',
-							roles: ['dev','client'],
 						},
 					},
 				],
@@ -311,7 +271,7 @@ module.exports = function (app) {
 					{
 						path: 'info',
 						name: 'Personal information',
-						type: 'update',
+						type: 'create',
 						props: {
 							edit: true,
 						},
@@ -322,6 +282,7 @@ module.exports = function (app) {
 							/* IMPORTANT: update page needs to upgrade to newest version of flexform (aea2a846) to get this feature below! */
 							schemaUrl: '/api/get_info',
 							submitUrl: '/api/info',
+							roles: ['pm'],
 						},
 					},
 				],
@@ -337,10 +298,10 @@ module.exports = function (app) {
 				children: [
 					{
 						path: 'create',
-						name: 'Write Hourly Rate',
+						name: 'Add Hourly Rate',
 						type: 'create',
 						meta: {
-							title: 'Write Hourly Rate',
+							title: 'Add Hourly Rate',
 							icon: 'hourly_rate',
 							roles: ['admin'],
 							
@@ -361,52 +322,53 @@ module.exports = function (app) {
 					},
 				],
 			},
-			{
-				path: '/case',
-				redirect: '/case',
-				name: 'case',
-				meta: {
-					title: 'Case',
-					icon: 'case',
-				},
-				children: [
-					{
-						path: 'create',
-						name: 'Create case',
-						type: 'update',
-						props: {
-							edit: true,
-						},
-						meta: {
-							title: 'Create case',
-							icon: 'edit',
-							form_name: 'case',
-							isUpdate: false,
-						},
-					},
-					{
-						path: 'list',
-						name: 'Case list',
-						type: 'list',
-						props: {
-							edit: true,
-						},
-						meta: {
-							title: 'Case list',
-							icon: 'edit',
-							roles: ['admin', 'PM'],
-							extra_btn: [
-								{
-									name: '新增開發週期',
-									button_name: '新增',
-									path: 'add_cycles', // 後面加上的網址
-									para: ['record_id'], // 新增的參數
-								},
-							],
-						},
-					},
-				],
-			},
+			// {
+			// 	path: '/case',
+			// 	redirect: '/case',
+			// 	name: 'case',
+			// 	meta: {
+			// 		title: 'Case',
+			// 		icon: 'case',
+			// 	},
+			// 	children: [
+			// 		{
+			// 			path: 'create',
+			// 			name: 'Create case',
+			// 			type: 'create',
+			// 			props: {
+			// 				edit: true,
+			// 			},
+			// 			meta: {
+			// 				title: 'Create case',
+			// 				icon: 'edit',
+			// 				form_name: 'case',
+			// 				isUpdate: false,
+			// 				role: ['admin'],
+			// 			},
+			// 		},
+			// 		{
+			// 			path: 'list',
+			// 			name: 'Case list',
+			// 			type: 'list',
+			// 			props: {
+			// 				edit: true,
+			// 			},
+			// 			meta: {
+			// 				title: 'Case list',
+			// 				icon: 'edit',
+			// 				roles: ['admin'],
+			// 				extra_btn: [
+			// 					{
+			// 						name: 'New cycle',
+			// 						button_name: 'Add',
+			// 						path: 'add_cycles', // 後面加上的網址
+			// 						para: ['record_id'], // 新增的參數
+			// 					},
+			// 				],
+			// 			},
+			// 		},
+			// 	],
+			// },
 			{
 				path: '/dev_cycles',
 				redirect: '/dev_cycles',
@@ -419,7 +381,7 @@ module.exports = function (app) {
 					{
 						path: 'create',
 						name: 'Create cycle',
-						type: 'update',
+						type: 'create',
 						props: {
 							edit: true,
 						},
@@ -428,6 +390,7 @@ module.exports = function (app) {
 							icon: 'edit',
 							form_name: 'dev_cycles',
 							isUpdate: false,
+							roles: ['pm', 'admin']
 						},
 					},
 					{
@@ -440,29 +403,13 @@ module.exports = function (app) {
 						meta: {
 							title: 'Dev cycles',
 							icon: 'edit',
-							roles: ['admin', 'PM'],
+							roles: ['admin'],
 						},
 					},
 				],
 			},
 		];
 		res.send(menu);
-	});
-	app.get('/api/analysis',  (req, res)=> {
-		// var login = l_checkLogin(req);
-		// console.log(login)
-		// if (!login.account)
-		// 	return res.redirect('/');
-
-		var para = {
-			// login: login,
-			language: l_lang,
-			// role: l_accounts[login.account].control.groups[0],
-			// admin: l_accounts[login.account].control.groups.includes('administrator'),
-			// account: login.account
-		};
-
-		res.render('analysis',para);
 	});
 	
 	app.get('/api/get_info', (req, res, next) => {

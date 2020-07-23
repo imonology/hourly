@@ -28,10 +28,9 @@ module.exports = {
 		sub_data: {
 			name: 'Multiple data',
 			type: 'sub_model',
-			must: false,
+			must: true,
 			show: true,
-			required: false,
-			forbid_delete: false,
+			required: true,
 			fields: {
 				data1: {
 					name: 'Document name',

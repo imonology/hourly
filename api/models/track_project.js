@@ -1,13 +1,19 @@
 module.exports = {
-	name: 'track project',
+	name: 'progress',
 	fields: {
 		role: { 
 			name: 'Project',
-			type: 'string',
+			type: 'choice',
+			model: 'project',
 			desc: '',
 			must: true,
 			show: true,
 			required: true,
+			option: [
+				{
+					model: 'project.values.project_name'
+				}
+			]
 		},
 		member: {
 			name: 'Member',
@@ -25,8 +31,8 @@ module.exports = {
 			required: true,
 			option: [
 				{
-					value: 'Whether the price',
-					text: 'Whether the price',
+					value: 'Normal',
+					text: 'Normal',
 				},
 				{
 					value: 'Overtime',
@@ -49,7 +55,7 @@ module.exports = {
 		Complete_the_project:{
 			name: 'Complete project',
 			type: 'textarea',
-			row: 5,
+			row: 3,
 			desc: '',
 			must: true,
 			show: true,
@@ -57,7 +63,7 @@ module.exports = {
 		Remarks:{
 			name: 'Remarks',
 			type: 'textarea',
-			row: 5,
+			row: 3,
 			desc: '',
 			must: true,
 			show: true,
@@ -65,7 +71,7 @@ module.exports = {
 		To_do:{
 			name: 'To do',
 			type: 'textarea',
-			row: 5,
+			row: 3,
 			desc: '',
 			must: true,
 			show: true,

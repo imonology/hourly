@@ -21,10 +21,9 @@ module.exports = {
 		},
 		dev_cycles: {
 			name: 'Dev Cycles',
-			model: 'dev_cycles_custom',
+			model: 'dev_cycles',
 			desc: '',
 			show: true,
-			option_text: 'project'
 		},
 		PM: {
 			name: 'Project Manager',

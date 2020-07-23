@@ -1,5 +1,5 @@
 module.exports = {
-	name: '案件',
+	name: 'dev cycle',
 	fields: {
 		applicant: {
 			name: 'Cycle name',
