@@ -1,7 +1,7 @@
 module.exports = {
 	name: 'progress',
 	fields: {
-		prj: {
+		project: {
 			name: 'Project',
 			type: 'choice',
 			desc: '',
@@ -10,52 +10,51 @@ module.exports = {
 			required: true,
 			option: {
 				form: 'project',
+				query: {},
 				value: 'project_name',
 				text: 'project_name',
 			}
 		},
 		member: {
 			name: 'Member',
-			type: 'number',
+			// type: 'number',
+			model: '_account',
 			desc: '',
 			must: false,
 			show: false,
 		},
-		special_price_setting_1: {
-			name: 'Test',
-			type: 'choice',
-			desc: '',
-			must: true,
-			show: true,
-			required: true,
-			option: {
-				form: 'dev_cycles',
-				value: 'applicant',
-				text: 'applicant',
-			}
-		},
+		// special_price_setting_1: {
+		// 	name: 'Test',
+		// 	type: 'choice',
+		// 	desc: '',
+		// 	must: true,
+		// 	show: true,
+		// 	required: true,
+		// 	option: {
+		// 		form: 'dev_cycles',
+		// 		value: 'applicant',
+		// 		text: 'applicant',
+		// 	}
+		// },
 		special_price_setting: {
-			name: 'Pricing settings',
-			type: 'choice',
+			name: 'Overtime',
+			type: 'boolean',
+			shape: 'checkbox',
 			desc: '',
 			must: true,
 			show: true,
 			required: true,
-			// option: [
-			// 	{
-			// 		value: 'Normal',
-			// 		text: 'Normal',
-			// 	},
-			// 	{
-			// 		value: 'Overtime',
-			// 		text: 'Overtime',
-			// 	},
-			// ],
-			option: {
-				form: 'dev_cycles',
-				value: 'applicant',
-				text: 'applicant',
-			}
+			default: [
+				{
+					value: 'Overtime',
+					text: 'Overtime',
+				},
+			],
+			// option: {
+			// 	form: 'dev_cycles',
+			// 	value: 'applicant',
+			// 	text: 'applicant',
+			// }
 		},
 		Starting_time: {
 			name: 'Starting time',

@@ -1,5 +1,5 @@
 module.exports = {
-	name: 'project define',
+	name: 'project',
 	fields: {
 		project_name: { 
 			name: 'Project Name',
@@ -21,51 +21,81 @@ module.exports = {
 		},
 		dev_cycles: {
 			name: 'Dev Cycles',
-			model: 'dev_cycles',
+			type: 'choice',
 			desc: '',
+			must: false,
 			show: true,
+			option: {
+				form: 'dev_cycles',
+				value: 'applicant',
+				text: 'applicant'
+			}
 		},
 		PM: {
 			name: 'Project Manager',
 			model: '_account',
 			desc: '',
 			show: true,
-			require: true
+			require: true,
+			option: {
+				value: 'account',
+				text: 'account'
+			}
 		},
 		client1: {
 			name: 'Client 1',
 			model: '_account',
 			desc: '',
 			show: true,
-			require: true
+			require: true,
+			option: {
+				model: '_account',
+				text: 'account'
+			}
 		},
 		client2: {
 			name: 'Client 2',
 			model: '_account',
 			desc: '',
 			show: true,
-			require: true
+			require: true,
+			option: {
+				model: '_account',
+				text: 'account'
+			}
 		},
 		dev1: {
 			name: 'developer 1',
 			model: '_account',
 			desc: '',
 			show: true,
-			require: true
+			require: true,
+			option: {
+				model: '_account',
+				text: 'account'
+			}
 		},
 		dev2: {
 			name: 'developer 2',
 			model: '_account',
 			desc: '',
 			show: true,
-			require: true
+			require: true,
+			option: {
+				model: '_account',
+				text: 'account'
+			}
 		},	
 		dev3: {
 			name: 'developer 3',
 			model: '_account',
 			desc: '',
 			show: true,
-			require: true
+			require: true,
+			option: {
+				model: '_account',
+				text: 'account'
+			}
 		},	
 	}
 };

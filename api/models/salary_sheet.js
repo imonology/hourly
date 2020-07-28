@@ -1,7 +1,7 @@
 module.exports = {
-	name: 'track project',
+	name: 'salary sheet',
 	fields: {
-		sort: {
+		hourly_rate: {
 			name: 'Sort settings',
 			type: 'choice',
 			desc: '',
@@ -130,6 +130,14 @@ module.exports = {
 			must: true,
 			show: true,
 			required: false,
+		},
+		member: {
+			name: 'Member',
+			// type: 'number',
+			model: '_account',
+			desc: '',
+			must: false,
+			show: false,
 		},
 	}
 };

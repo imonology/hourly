@@ -85,6 +85,52 @@ module.exports = function (app) {
 			// 		},
 			// 	],
 			// },
+						{
+				path: '/progress',
+				redirect: '/progress',
+				name: 'progress',
+				meta: {
+					title: 'Progress',
+					icon: 'progress',
+				},
+				children: [
+					{
+						path: 'create',
+						name: 'set tracking',
+						type: 'create',
+						props: {
+							edit: true,
+						},
+						meta: {
+							title: 'Set Track',
+							icon: 'edit',
+							form_name: 'progress',
+							isUpdate: false,
+							roles: ['developer'],
+						},
+					},
+					{
+						path: 'list',
+						name: 'get track list',
+						type: 'list',
+						props: {
+							edit: true,
+						},
+						meta: {
+							title: 'Track List',
+							icon: 'edit',
+							roles: ['pm', 'admin', 'client'],
+							// extra_btn: [
+							// 	{
+							// 		name: 'check',
+							// 		path: 'add_log',
+							// 		para: ['boolean'], 
+							// 	},
+							// ],
+						},
+					},
+				],
+			},
 			{
 				path: '/project',
 				redirect: '/project',
@@ -124,98 +170,11 @@ module.exports = function (app) {
 					},
 				],
 			},
-			// {
-			// 	path: '/dev_cycles_custom',
-			// 	redirect: '/dev_cycles_custom',
-			// 	name: 'Cycle dev',
-			// 	meta: {
-			// 		title: 'Dev Cycles',
-			// 		icon: 'dev_cycles_custom',
-			// 	},
-			// 	children: [
-			// 		{
-			// 			path: 'create',
-			// 			name: 'set cycle',
-			// 			type: 'create',
-			// 			meta: {
-			// 				title: 'Set Cycle',
-			// 				icon: 'dev_cycles_custom',
-			// 				roles: ['admin'],
-			// 			},
-			// 		},
-			// 		// {
-			// 		// 	path: 'list',
-			// 		// 	name: 'get cycle list',
-			// 		// 	type: 'list',
-			// 		// 	props: {
-			// 		// 		edit: true,
-			// 		// 	},
-			// 		// 	meta: {
-			// 		// 		title: 'Cycle List',
-			// 		// 		icon: 'edit',
-			// 		// 		roles: ['admin'],
-			// 		// 	},
-			// 		// },
-			// 		{
-			// 			path: 'info',
-			// 			name: 'get cycle list',
-			// 			type: 'list',
-			// 			props: {
-			// 				edit: false,
-			// 			},
-			// 			meta: {
-			// 				title: 'Cycle List Dev',
-			// 				icon: 'list',
-			// 				roles: ['dev','pm','client'],
-			// 			},
-			// 		},
-			// 	],
-			// },
-			{
-				path: '/track_project',
-				redirect: '/track_project',
-				name: 'Progress',
-				meta: {
-					title: 'Progress',
-					icon: 'progress',
-				},
-				children: [
-					{
-						path: 'create',
-						name: 'set tracking',
-						type: 'create',
-						meta: {
-							title: 'Set Track',
-							icon: 'rate',
-							roles: ['developer'],
-						},
-					},
-					{
-						path: 'list',
-						name: 'get track list',
-						type: 'list',
-						// props: {
-						// 	edit: false,
-						// },
-						meta: {
-							title: 'Track List',
-							icon: 'edit',
-							roles: ['pm', 'admin', 'client'],
-							extra_btn: [
-								{
-									name: 'check',
-									path: 'add_log',
-									para: ['boolean'], 
-								},
-							],
-						},
-					},
-				],
-			},
+
 			{
 				path: '/salary_sheet',
 				redirect: '/salary_sheet',
-				name: 'Salary track',
+				name: 'salary track',
 				meta: {
 					title: 'Salary',
 					icon: 'salary_sheet',
@@ -225,9 +184,14 @@ module.exports = function (app) {
 						path: 'create',
 						name: 'set salary',
 						type: 'create',
+						props: {
+							edit: true,
+						},
 						meta: {
 							title: 'Set Salary',
-							icon: 'rate',
+							icon: 'edit',
+							form_name: 'salary_sheet',
+							isUpdate: false,
 							roles: ['admin'],
 						},
 					},
@@ -236,7 +200,7 @@ module.exports = function (app) {
 						name: 'get salary list',
 						type: 'list',
 						props: {
-							edit: false,
+							edit: true,
 						},
 						meta: {
 							title: 'Salary List',
@@ -266,25 +230,27 @@ module.exports = function (app) {
 							title: 'Basic info list',
 							icon: 'edit',
 							roles: ['admin'],
+							schemaUrl: '/api/info',
+							// submitUrl: '/api/info',
 						},
 					},
-					{
-						path: 'info',
-						name: 'Personal information',
-						type: 'create',
-						props: {
-							edit: true,
-						},
-						meta: {
-							title: 'Personal information',
-							icon: 'edit',
-							// roles: ['c1'], // 此處還需要修改，只能讓登入者看到自己的帳號，且不可刪除
-							/* IMPORTANT: update page needs to upgrade to newest version of flexform (aea2a846) to get this feature below! */
-							schemaUrl: '/api/get_info',
-							submitUrl: '/api/info',
-							roles: ['pm'],
-						},
-					},
+					// {
+					// 	path: 'info',
+					// 	name: 'Personal information',
+					// 	type: 'create',
+					// 	props: {
+					// 		edit: true,
+					// 	},
+					// 	meta: {
+					// 		title: 'Personal information',
+					// 		icon: 'edit',
+					// 		// roles: ['c1'], // 此處還需要修改，只能讓登入者看到自己的帳號，且不可刪除
+					// 		/* IMPORTANT: update page needs to upgrade to newest version of flexform (aea2a846) to get this feature below! */
+					// 		// schemaUrl: '/api/project',
+					// 		// submitUrl: '/api/info',
+					// 		roles: ['pm'],
+					// 	},
+					// },
 				],
 			},
 			{
@@ -412,25 +378,46 @@ module.exports = function (app) {
 		res.send(menu);
 	});
 	
-	app.get('/api/get_info', (req, res, next) => {
-		let controller = new SR.Flexform.controller('info');
+	app.get('/api/info', (req, res, next) => {
+		let project = new SR.Flexform.controller('project');
+		let account = new SR.Flexform.controller('_account');
+		// let acc = Object.keys(account.data)[0];
 		const found_account = l_checkLogin(req).account;
-
-		controller.findOne({ query: { account: found_account } });
-
-		if (Object.keys(controller.data.values).length === 0) {
-			controller = JSON.parse(JSON.stringify(controller.find()));
-			controller.data.values = {};
-		}
-
-		res.send(controller);
+		console.log(found_account);
+		
+		account.findOne({ query: { account: found_account } });
+		console.log('acc ' + Object.keys(account.data).length);
+		// console.log('project ' + Object.keys(project.data.values)[0]);
+		
+		res.send(account);
 	});
+	
+// 	app.get('/api/get_info', (req, res, next) => {
+// 		let info = new SR.Flexform.controller('info');
+// 		let project = new SR.Flexform.controller('project');
+// 		let account = new SR.Flexform.controller('_account');
+// 		const found_account = l_checkLogin(req).account;
+// 		let proj = Object.keys(project.data.values)[0];
+// 		let acc = Object.keys(account.data.values)[0];
+// 		console.log('project ' + proj);
+// 		console.log('account ' + acc);
+// 		info.findOne({ query: { account: found_account } });
+// 		// console.log(controller.findOne);
+// 		console.log(info.data.values);
+// 		if (Object.keys(info.data.values).length === 0) {
+// 			console.log('AAAA');
+// 			info = JSON.parse(JSON.stringify(info.find()));
+// 			info.data.values = {};
+// 		}
+		
+
+// 		res.send(info);
+// 	});
 
 	app.patch('/api/info', (req, res, next) => {
 		let controller = new SR.Flexform.controller('info');
 
 		const found_account = l_checkLogin(req).account;
-		
 		controller.findOne({ query: { account: found_account } });
 
 		let record_id = Object.keys(controller.data.values)[0];

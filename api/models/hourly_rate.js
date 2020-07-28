@@ -1,7 +1,7 @@
 module.exports = {
 	name: 'Hourly fee',
 	fields: {
-		role: {
+		identity: {
 			name: 'Identity',
 			type: 'string',
 			desc: '',
