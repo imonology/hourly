@@ -9,6 +9,14 @@ module.exports = {
 			show: true,
 			required: true,
 		},
+		description: {
+			name: 'Description',
+			type: 'string',
+			desc: '',
+			must: true,
+			show: true,
+			required: false,
+		},
 		pm_hour: {
 			name: 'PM hour',
 			type: 'number',
