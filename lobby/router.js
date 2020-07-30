@@ -119,7 +119,7 @@ module.exports = function (app) {
 						meta: {
 							title: 'Track List',
 							icon: 'edit',
-							roles: ['pm', 'admin', 'client'],
+							roles: ['pm', 'admin', 'client', 'developer'],
 							// extra_btn: [
 							// 	{
 							// 		name: 'check',
@@ -210,30 +210,30 @@ module.exports = function (app) {
 					},
 				],
 			},
-			{
-				path: '/info',
-				redirect: '/info',
-				name: 'info',
-				meta: {
-					title: 'Basic info',
-					icon: 'basic info',
-				},
-				children: [
-					{
-						path: 'list',
-						name: 'Basic info list',
-						type: 'list',
-						props: {
-							edit: true,
-						},
-						meta: {
-							title: 'Basic info list',
-							icon: 'edit',
-							roles: ['admin'],
-							schemaUrl: '/api/info',
-							// submitUrl: '/api/info',
-						},
-					},
+			// {
+			// 	path: '/info',
+			// 	redirect: '/info',
+			// 	name: 'info',
+			// 	meta: {
+			// 		title: 'Basic info',
+			// 		icon: 'basic info',
+			// 	},
+			// 	children: [
+			// 		{
+			// 			path: 'list',
+			// 			name: 'Basic info list',
+			// 			type: 'list',
+			// 			props: {
+			// 				edit: true,
+			// 			},
+			// 			meta: {
+			// 				title: 'Basic info list',
+			// 				icon: 'edit',
+			// 				roles: ['pm'],
+			// 				schemaUrl: '/api/info',
+			// 				// submitUrl: '/api/info',
+			// 			},
+			// 		},
 					// {
 					// 	path: 'info',
 					// 	name: 'Personal information',
@@ -251,8 +251,8 @@ module.exports = function (app) {
 					// 		roles: ['pm'],
 					// 	},
 					// },
-				],
-			},
+			// 	],
+			// },
 			{
 				path: '/hourly_rate',
 				redirect: '/hourly_rate',

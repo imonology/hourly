@@ -23,6 +23,11 @@ module.exports = {
 			name: 'Dev Cycles',
 			type: 'choice',
 			desc: '',
+			// choice: {
+			// 	form: 'dev_cycles',
+			// 	value: 'applicant',
+			// 	text: 'applicant'
+			// },
 			must: false,
 			show: true,
 			option: {
@@ -37,10 +42,12 @@ module.exports = {
 			desc: '',
 			show: true,
 			require: true,
-			option: {
-				value: 'account',
-				text: 'account'
-			}
+			// option: {
+			// 	form: '_account',
+			// 	query: {control: {groups: ['pm']}},
+			// 	// value: 'account',
+			// 	// text: 'account'
+			// }
 		},
 		client1: {
 			name: 'Client 1',
