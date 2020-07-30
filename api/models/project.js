@@ -1,7 +1,7 @@
 module.exports = {
 	name: 'project',
 	fields: {
-		project_name: { 
+		project_name: {
 			name: 'Project Name',
 			type: 'string',
 			desc: '',
@@ -19,9 +19,9 @@ module.exports = {
 			show: true,
 			require: false
 		},
-		dev_cycles: {
-			name: 'Dev Cycles',
-			type: 'choice',
+		sub_dev_cycle: {
+			name: 'Dev cycles',
+			type: 'sub_model',
 			desc: '',
 			// choice: {
 			// 	form: 'dev_cycles',
@@ -30,11 +30,29 @@ module.exports = {
 			// },
 			must: false,
 			show: true,
-			option: {
-				form: 'dev_cycles',
-				value: 'applicant',
-				text: 'applicant'
-			}
+			required: false,
+			fields: {
+				cycle: {
+					name: 'Name',
+					type: 'choice',
+					desc: '',
+					must: false,
+					show: true,
+					// option: {
+					// 	form: 'dev_cycles',
+					// 	query: {},
+					// 	value: 'applicant',
+					// 	text: 'applicant'
+					// }
+				},
+				amount: {
+					name: 'amount',
+					type: 'number',
+					desc: '',
+					must: true,
+					show: true,
+				},
+			},
 		},
 		PM: {
 			name: 'Project Manager',

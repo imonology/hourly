@@ -153,6 +153,7 @@ module.exports = function (app) {
 							form_name: 'project',
 							isUpdate: false,
 							roles: ['pm'],
+							schemaUrl: '/api/project/schema'
 						},
 					},
 					{
@@ -270,7 +271,6 @@ module.exports = function (app) {
 							title: 'Add Hourly Rate',
 							icon: 'hourly_rate',
 							roles: ['admin'],
-							
 						},
 					},
 					{
@@ -356,7 +356,7 @@ module.exports = function (app) {
 							icon: 'edit',
 							form_name: 'dev_cycles',
 							isUpdate: false,
-							roles: ['pm', 'admin']
+							roles: ['admin']
 						},
 					},
 					{
@@ -377,7 +377,45 @@ module.exports = function (app) {
 		];
 		res.send(menu);
 	});
-	
+
+	app.post('/api/salary', (req, res, next) => {
+		console.log(JSON.stringify(req.body))
+
+		let p_controller = new SR.Flexform.controller('project')
+		const found_account = l_checkLogin(req).account;
+		p_controller.findOne({ query: { account: found_account } });
+		
+		if (Object.keys(p_controller.data.values).length === 0) {
+			p_controller = JSON.parse(JSON.stringify(p_controller.find()));
+			p_controller.data.values = {};
+		}
+
+		res.send(p_controller)
+	})
+
+	app.get('/api/project/schema', (req, res, next) => {
+		let p_controller = new SR.Flexform.controller('project')
+		let d_controller = new SR.Flexform.controller('dev_cycles')
+
+		const found_account = l_checkLogin(req).account;
+
+		p_controller.findOne({ query: { account: found_account } });
+		d_controller.find({ query: { account: found_account } });
+
+		if (Object.keys(p_controller.data.values).length === 0) {
+			p_controller = JSON.parse(JSON.stringify(p_controller.find()));
+			p_controller.data.values = {};
+		}
+
+		let option = Object.keys(d_controller.data.values).map((elem, i, arr) => {
+			return { text: d_controller.data.values[elem].applicant, value: elem }
+		})
+
+		p_controller.data.fields[2].fields.cycle.option = option
+
+		res.send(p_controller);
+	});
+
 	app.get('/api/info', (req, res, next) => {
 		let project = new SR.Flexform.controller('project');
 		let account = new SR.Flexform.controller('_account');
@@ -431,7 +469,5 @@ module.exports = function (app) {
 			controller.create(updateData.values).then;
 		}
 		res.send(controller);
-	});
-	
-	
+	})
 };
