@@ -8,53 +8,41 @@ module.exports = {
 			must: true,
 			show: true,
 			required: true,
-			option: {
-				form: 'project',
-				query: {},
-				value: 'project_name',
-				text: 'project_name',
-			}
+			// option: {
+			// 	form: 'project',
+			// 	query: {},
+			// 	value: 'project_name',
+			// 	text: 'project_name',
+			// }
 		},
+		// member1: {
+		// 	name: 'Member',
+		// 	model: '_account',
+		// 	desc: '',
+		// 	must: false,
+		// 	show: false,
+		// },
 		member: {
 			name: 'Member',
-			// type: 'number',
 			model: '_account',
 			desc: '',
-			must: false,
 			show: false,
+			required: false,
 		},
-		// special_price_setting_1: {
-		// 	name: 'Test',
-		// 	type: 'choice',
-		// 	desc: '',
-		// 	must: true,
-		// 	show: true,
-		// 	required: true,
-		// 	option: {
-		// 		form: 'dev_cycles',
-		// 		value: 'applicant',
-		// 		text: 'applicant',
-		// 	}
-		// },
 		special_price_setting: {
 			name: 'Overtime',
 			type: 'boolean',
 			shape: 'checkbox',
 			desc: '',
 			must: true,
-			show: true,
-			required: true,
+			show: false,
+			required: false,
 			default: [
 				{
-					value: 'Overtime',
-					text: 'Overtime',
+					value: 'Normal',
+					text: 'Normal',
 				},
 			],
-			// option: {
-			// 	form: 'dev_cycles',
-			// 	value: 'applicant',
-			// 	text: 'applicant',
-			// }
 		},
 		Starting_time: {
 			name: 'Starting time',
@@ -91,6 +79,16 @@ module.exports = {
 			desc: '',
 			must: true,
 			show: true,
+		},
+		Approve: {
+			name: 'PM confirmation',
+			type: 'boolean',
+			shape: 'checkbox',
+			desc: '',
+			must: true,
+			required: false,
+			show:  false,
+			
 		}
 	}
 };

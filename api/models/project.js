@@ -21,51 +21,48 @@ module.exports = {
 		},
 		sub_dev_cycle: {
 			name: 'Dev cycles',
-			type: 'sub_model',
+			// type: 'sub_model',
+			type: 'choice',
 			desc: '',
-			// choice: {
-			// 	form: 'dev_cycles',
-			// 	value: 'applicant',
-			// 	text: 'applicant'
-			// },
+			option: {
+				form: 'dev_cycles',
+				value: 'applicant',
+				text: 'applicant'
+			},
 			must: false,
 			show: true,
 			required: false,
-			fields: {
-				cycle: {
-					name: 'Name',
-					type: 'choice',
-					desc: '',
-					must: false,
-					show: true,
+			// fields: {
+			// 	cycle: {
+			// 		name: 'Name',
+			// 		type: 'string',
+			// 		desc: '',
+			// 		must: false,
+			// 		show: true,
 					// option: {
 					// 	form: 'dev_cycles',
 					// 	query: {},
 					// 	value: 'applicant',
 					// 	text: 'applicant'
 					// }
-				},
-				amount: {
-					name: 'amount',
-					type: 'number',
-					desc: '',
-					must: true,
-					show: true,
-				},
-			},
+				// },
+				// amount: {
+				// 	name: 'amount',
+				// 	type: 'number',
+				// 	desc: '',
+				// 	must: true,
+				// 	show: true,
+				// },
+			// },
 		},
-		PM: {
+		pm: {
 			name: 'Project Manager',
 			model: '_account',
+			type: 'choice',
 			desc: '',
 			show: true,
 			require: true,
-			// option: {
-			// 	form: '_account',
-			// 	query: {control: {groups: ['pm']}},
-			// 	// value: 'account',
-			// 	// text: 'account'
-			// }
+
 		},
 		client1: {
 			name: 'Client 1',
@@ -73,10 +70,7 @@ module.exports = {
 			desc: '',
 			show: true,
 			require: true,
-			option: {
-				model: '_account',
-				text: 'account'
-			}
+			
 		},
 		client2: {
 			name: 'Client 2',
@@ -84,10 +78,7 @@ module.exports = {
 			desc: '',
 			show: true,
 			require: true,
-			option: {
-				model: '_account',
-				text: 'account'
-			}
+			
 		},
 		dev1: {
 			name: 'developer 1',
@@ -95,10 +86,7 @@ module.exports = {
 			desc: '',
 			show: true,
 			require: true,
-			option: {
-				model: '_account',
-				text: 'account'
-			}
+			
 		},
 		dev2: {
 			name: 'developer 2',
@@ -106,10 +94,7 @@ module.exports = {
 			desc: '',
 			show: true,
 			require: true,
-			option: {
-				model: '_account',
-				text: 'account'
-			}
+			
 		},	
 		dev3: {
 			name: 'developer 3',
@@ -117,10 +102,7 @@ module.exports = {
 			desc: '',
 			show: true,
 			require: true,
-			option: {
-				model: '_account',
-				text: 'account'
-			}
+		
 		},	
 	}
 };
