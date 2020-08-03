@@ -7,7 +7,7 @@ module.exports = {
 			desc: '',
 			must: true,
 			show: true,
-			required: true,
+			required: true, 
 			option: {
 				form: 'project',
 				query: {},
@@ -16,12 +16,15 @@ module.exports = {
 			}
 		},
 		member: {
-			name: 'Member',
-			// type: 'number',
+			name: 'member',
 			model: '_account',
 			desc: '',
-			must: false,
-			show: false,
+			show: true,
+			require: true,
+			option: {
+				model: '_account',
+				text: 'account'
+			}
 		},
 		// special_price_setting_1: {
 		// 	name: 'Test',
@@ -43,13 +46,8 @@ module.exports = {
 			desc: '',
 			must: true,
 			show: true,
-			required: true,
-			default: [
-				{
-					value: 'Overtime',
-					text: 'Overtime',
-				},
-			],
+			// required: true,
+			default: false,
 			// option: {
 			// 	form: 'dev_cycles',
 			// 	value: 'applicant',
