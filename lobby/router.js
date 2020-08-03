@@ -90,6 +90,48 @@ module.exports = function (app) {
 			// 	],
 			// },
 			{
+				path: '/project',
+				redirect: '/project',
+				name: 'project',
+				meta: {
+					title: 'Project',
+					icon: 'project',
+				},
+				children: [
+					{
+						path: 'create',
+						name: 'Create project',
+						type: 'create',
+						// props: {
+						// 	edit: true,
+						// },
+						meta: {
+							title: 'Create project',
+							icon: 'edit',
+							form_name: 'project',
+							// isUpdate: false,
+							roles: ['pm'],
+							schemaUrl: '/api/project/schema',
+						},
+					},
+					{
+						path: 'list',
+						name: 'Project list',
+						type: 'list',
+						props: {
+							edit: true,
+						},
+						meta: {
+							title: 'Project list',
+							icon: 'edit',
+							isUpdate: false,
+							roles: ['pm', 'admin', 'client'],
+							schemaUrl: '/api/project',
+						},
+					},
+				],
+			},
+			{
 				path: '/progress',
 				redirect: '/progress',
 				name: 'progress',
@@ -111,6 +153,7 @@ module.exports = function (app) {
 							form_name: 'progress',
 							isUpdate: false,
 							roles: ['developer'],
+							schemaUrl: '/api/progress/schema',
 						},
 					},
 					{
@@ -123,7 +166,7 @@ module.exports = function (app) {
 						meta: {
 							title: 'Track List',
 							icon: 'edit',
-							roles: ['pm', 'admin', 'client'],
+							roles: ['pm', 'admin', 'client', 'developer'],
 							// extra_btn: [
 							// 	{
 							// 		name: 'check',
@@ -131,51 +174,11 @@ module.exports = function (app) {
 							// 		para: ['boolean'], 
 							// 	},
 							// ],
+							schemaUrl: '/api/progress',
 						},
 					},
 				],
 			},
-			{
-				path: '/project',
-				redirect: '/project',
-				name: 'project',
-				meta: {
-					title: 'Project',
-					icon: 'project',
-				},
-				children: [
-					{
-						path: 'create',
-						name: 'Create project',
-						type: 'create',
-						props: {
-							edit: true,
-						},
-						meta: {
-							title: 'Create project',
-							icon: 'edit',
-							form_name: 'project',
-							isUpdate: false,
-							roles: ['pm'],
-							schemaUrl: '/api/project/schema'
-						},
-					},
-					{
-						path: 'list',
-						name: 'Project list',
-						type: 'list',
-						props: {
-							edit: true,
-						},
-						meta: {
-							title: 'Project list',
-							icon: 'edit',
-							roles: ['pm', 'admin', 'client'],
-						},
-					},
-				],
-			},
-
 			{
 				path: '/salary_filter',
 				redirect: '/salary_filter',
@@ -242,30 +245,30 @@ module.exports = function (app) {
 					},
 				],
 			},
-			{
-				path: '/info',
-				redirect: '/info',
-				name: 'info',
-				meta: {
-					title: 'Basic info',
-					icon: 'basic info',
-				},
-				children: [
-					{
-						path: 'list',
-						name: 'Basic info list',
-						type: 'list',
-						props: {
-							edit: true,
-						},
-						meta: {
-							title: 'Basic info list',
-							icon: 'edit',
-							roles: ['admin'],
-							schemaUrl: '/api/info',
-							// submitUrl: '/api/info',
-						},
-					},
+			// {
+			// 	path: '/info',
+			// 	redirect: '/info',
+			// 	name: 'info',
+			// 	meta: {
+			// 		title: 'Basic info',
+			// 		icon: 'basic info',
+			// 	},
+			// 	children: [
+			// 		{
+			// 			path: 'list',
+			// 			name: 'Basic info list',
+			// 			type: 'list',
+			// 			props: {
+			// 				edit: true,
+			// 			},
+			// 			meta: {
+			// 				title: 'Basic info list',
+			// 				icon: 'edit',
+			// 				roles: ['pm'],
+			// 				schemaUrl: '/api/info',
+			// 				// submitUrl: '/api/info',
+			// 			},
+			// 		},
 					// {
 					// 	path: 'info',
 					// 	name: 'Personal information',
@@ -283,8 +286,8 @@ module.exports = function (app) {
 					// 		roles: ['pm'],
 					// 	},
 					// },
-				],
-			},
+			// 	],
+			// },
 			{
 				path: '/hourly_rate',
 				redirect: '/hourly_rate',
@@ -319,53 +322,6 @@ module.exports = function (app) {
 					},
 				],
 			},
-			// {
-			// 	path: '/case',
-			// 	redirect: '/case',
-			// 	name: 'case',
-			// 	meta: {
-			// 		title: 'Case',
-			// 		icon: 'case',
-			// 	},
-			// 	children: [
-			// 		{
-			// 			path: 'create',
-			// 			name: 'Create case',
-			// 			type: 'create',
-			// 			props: {
-			// 				edit: true,
-			// 			},
-			// 			meta: {
-			// 				title: 'Create case',
-			// 				icon: 'edit',
-			// 				form_name: 'case',
-			// 				isUpdate: false,
-			// 				role: ['admin'],
-			// 			},
-			// 		},
-			// 		{
-			// 			path: 'list',
-			// 			name: 'Case list',
-			// 			type: 'list',
-			// 			props: {
-			// 				edit: true,
-			// 			},
-			// 			meta: {
-			// 				title: 'Case list',
-			// 				icon: 'edit',
-			// 				roles: ['admin'],
-			// 				extra_btn: [
-			// 					{
-			// 						name: 'New cycle',
-			// 						button_name: 'Add',
-			// 						path: 'add_cycles', // 後面加上的網址
-			// 						para: ['record_id'], // 新增的參數
-			// 					},
-			// 				],
-			// 			},
-			// 		},
-			// 	],
-			// },
 			{
 				path: '/dev_cycles',
 				redirect: '/dev_cycles',
@@ -423,27 +379,169 @@ module.exports = function (app) {
 
 		res.send(p_controller)
 	})
+	
+	app.get('/api/progress', (req, res, next) => {
+		let project = new SR.Flexform.controller('project');
+		let progress = new SR.Flexform.controller('progress');
+		let account = new SR.Flexform.controller('progress');
+		
+		const found_account = l_checkLogin(req).account;
+		const roles = l_checkLogin(req).roles;
+
+		account.find().populated();
+		progress.find({ query: {} });
+		project.find({ query: { account: found_account } });
+		
+		console.log(found_account + ' ' + roles);
+		if(Object.keys(progress.data.values).length === 0) {
+			progress = JSON.parse(JSON.stringify(progress.find()));
+			progress.data.values = {};
+		}		
+		let new_option = [];
+		for (let i in project.data.values) {
+			new_option.push({
+				value: project.data.values[i].project_name,
+				text: project.data.values[i].project_name,
+			})
+		}
+		let member = {
+			value: found_account,
+			text: found_account,
+		}
+		for(let i in progress.data.fields) {
+			if( progress.data.fields[i].id === 'project') {
+				progress.data.fields[i].option = new_option;
+			}
+			if( progress.data.fields[i].id === 'member') {
+				progress.data.fields[i].option = member;
+			}
+		}
+		
+		res.send(progress);
+	})
+	
+	app.get('/api/progress/schema', (req, res, next) => {
+		let project = new SR.Flexform.controller('project');
+		let progress = new SR.Flexform.controller('progress');
+		let account = new SR.Flexform.controller('progress');
+		
+		const found_account = l_checkLogin(req).account;
+		const roles = l_checkLogin(req).roles;
+
+		account.find().populated();
+		progress.find({ query: {} });
+		project.find({ query: { account: found_account } });
+		
+		console.log(found_account + ' ' + roles);
+		if(Object.keys(progress.data.values).length === 0) {
+			progress = JSON.parse(JSON.stringify(progress.find()));
+			progress.data.values = {};
+		}		
+		let new_option = [];
+		for (let i in project.data.values) {
+			new_option.push({
+				value: project.data.values[i].project_name,
+				text: project.data.values[i].project_name,
+			})
+		}
+		let member = {
+			value: found_account,
+			text: found_account,
+		}
+		for(let i in progress.data.fields) {
+			if( progress.data.fields[i].id === 'project') {
+				progress.data.fields[i].option = new_option;
+			}
+			if( progress.data.fields[i].id === 'member') {
+				progress.data.fields[i].option = member;
+			}
+		}
+		
+		res.send(progress);
+	});
 
 	app.get('/api/project/schema', (req, res, next) => {
 		let p_controller = new SR.Flexform.controller('project')
 		let d_controller = new SR.Flexform.controller('dev_cycles')
+		let account = new SR.Flexform.controller('project')
+		
 
 		const found_account = l_checkLogin(req).account;
-
-		p_controller.findOne({ query: { account: found_account } });
+		
+		account.find().populated();
+		p_controller.find({ query: {} });
 		d_controller.find({ query: { account: found_account } });
-
+		
+		for(let i in account.data.fields) {
+			if('model' in account.data.fields[i]) {
+				for(let j in account.data.fields[i].option) {
+					account.data.fields[i].option[j] = {
+						value: account.data.fields[i].option[j].value,
+						text: account.data.fields[i].option[j].value,
+					}
+				}
+			}
+		}
+			
 		if (Object.keys(p_controller.data.values).length === 0) {
 			p_controller = JSON.parse(JSON.stringify(p_controller.find()));
 			p_controller.data.values = {};
 		}
+		
+		let option = Object.keys(d_controller.data.values).map((elem, i, arr) => {
+			return { text: d_controller.data.values[elem].applicant, value: elem }
+		})
+		
+		for (let i in p_controller.data.fields) {
+			if(p_controller.data.fields[i].id === 'sub_dev_cycle' ){
+				// p_controller.data.fields[i].fields.cycle.option = option
+				p_controller.data.fields[i].option = option
 
+			}
+		}
+
+		res.send(p_controller);
+	});
+	
+	app.get('/api/project', (req, res, next) => {
+		let p_controller = new SR.Flexform.controller('project')
+		let d_controller = new SR.Flexform.controller('dev_cycles')
+		let account = new SR.Flexform.controller('project')
+		
+
+		const found_account = l_checkLogin(req).account;
+		
+		account.find().populated();
+		p_controller.find({ query: {} });
+		d_controller.find({ query: { account: found_account } });
+		
+		// console.log(JSON.stringify(account.data.fields));
+		
+		for(let i in account.data.fields) {
+			if('model' in account.data.fields[i]) {
+				for(let j in account.data.fields[i].option)
+				account.data.fields[i].option[j] = {
+					value: account.data.fields[i].option[j].value,
+					text: account.data.fields[i].option[j].value,
+				}
+			}
+		}
+			
+		if (Object.keys(p_controller.data.values).length === 0) {
+			p_controller = JSON.parse(JSON.stringify(p_controller.find()));
+			p_controller.data.values = {};
+		}
+		
 		let option = Object.keys(d_controller.data.values).map((elem, i, arr) => {
 			return { text: d_controller.data.values[elem].applicant, value: elem }
 		})
 
-		p_controller.data.fields[2].fields.cycle.option = option
-
+		for (let i in p_controller.data.fields) {
+			if(p_controller.data.fields[i].id === 'sub_dev_cycle' ){
+				// p_controller.data.fields[i].fields.cycle.option = option
+				p_controller.data.fields[i].option = option
+			}
+		}
 		res.send(p_controller);
 	});
 

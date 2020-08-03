@@ -7,52 +7,42 @@ module.exports = {
 			desc: '',
 			must: true,
 			show: true,
-			required: true, 
-			option: {
-				form: 'project',
-				query: {},
-				value: 'project_name',
-				text: 'project_name',
-			}
+			required: true,
+			// option: {
+			// 	form: 'project',
+			// 	query: {},
+			// 	value: 'project_name',
+			// 	text: 'project_name',
+			// }
 		},
+		// member1: {
+		// 	name: 'Member',
+		// 	model: '_account',
+		// 	desc: '',
+		// 	must: false,
+		// 	show: false,
+		// },
 		member: {
-			name: 'member',
+			name: 'Member',
 			model: '_account',
 			desc: '',
-			show: true,
-			require: true,
-			option: {
-				model: '_account',
-				text: 'account'
-			}
+			show: false,
+			required: false,
 		},
-		// special_price_setting_1: {
-		// 	name: 'Test',
-		// 	type: 'choice',
-		// 	desc: '',
-		// 	must: true,
-		// 	show: true,
-		// 	required: true,
-		// 	option: {
-		// 		form: 'dev_cycles',
-		// 		value: 'applicant',
-		// 		text: 'applicant',
-		// 	}
-		// },
 		special_price_setting: {
 			name: 'Overtime',
 			type: 'boolean',
 			shape: 'checkbox',
 			desc: '',
 			must: true,
-			show: true,
-			// required: true,
-			default: false,
-			// option: {
-			// 	form: 'dev_cycles',
-			// 	value: 'applicant',
-			// 	text: 'applicant',
-			// }
+			show: false,
+			required: false,
+			default: [
+				{
+					value: 'Normal',
+					text: 'Normal',
+				},
+			],
 		},
 		Starting_time: {
 			name: 'Starting time',
@@ -89,6 +79,16 @@ module.exports = {
 			desc: '',
 			must: true,
 			show: true,
+		},
+		Approve: {
+			name: 'PM confirmation',
+			type: 'boolean',
+			shape: 'checkbox',
+			desc: '',
+			must: true,
+			required: false,
+			show:  false,
+			
 		}
 	}
 };
