@@ -59,7 +59,7 @@ module.exports = {
 			name: 'Project Manager',
 			model: '_account',
 			type: 'choice',
-			desc: '',
+			desc: 'pm',
 			show: true,
 			require: true,
 
@@ -67,7 +67,7 @@ module.exports = {
 		client1: {
 			name: 'Client 1',
 			model: '_account',
-			desc: '',
+			desc: 'client',
 			show: true,
 			require: true,
 			
@@ -75,7 +75,7 @@ module.exports = {
 		client2: {
 			name: 'Client 2',
 			model: '_account',
-			desc: '',
+			desc: 'client',
 			show: true,
 			require: true,
 			
@@ -83,7 +83,7 @@ module.exports = {
 		dev1: {
 			name: 'developer 1',
 			model: '_account',
-			desc: '',
+			desc: 'developer',
 			show: true,
 			require: true,
 			
@@ -91,7 +91,7 @@ module.exports = {
 		dev2: {
 			name: 'developer 2',
 			model: '_account',
-			desc: '',
+			desc: 'developer',
 			show: true,
 			require: true,
 			
@@ -99,7 +99,7 @@ module.exports = {
 		dev3: {
 			name: 'developer 3',
 			model: '_account',
-			desc: '',
+			desc: 'developer',
 			show: true,
 			require: true,
 		

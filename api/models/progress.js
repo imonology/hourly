@@ -25,7 +25,9 @@ module.exports = {
 		member: {
 			name: 'Member',
 			model: '_account',
+			type: 'string',
 			desc: '',
+			must: true,
 			show: false,
 			required: false,
 		},
@@ -35,7 +37,7 @@ module.exports = {
 			shape: 'checkbox',
 			desc: '',
 			must: true,
-			show: false,
+			show: true,
 			required: false,
 			default: [
 				{

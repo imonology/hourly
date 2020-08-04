@@ -171,6 +171,7 @@ module.exports = function (app) {
 							// 	},
 							// ],
 							schemaUrl: '/api/progress',
+							submitUrl: '/api/progress',
 						},
 					},
 				],
@@ -208,7 +209,7 @@ module.exports = function (app) {
 						},
 						meta: {
 							title: 'Salary List',
-							icon: 'edit',
+							// icon: 'edit',
 							roles: ['admin'],
 						},
 					},
@@ -355,38 +356,131 @@ module.exports = function (app) {
 		let account = new SR.Flexform.controller('progress');
 		
 		const found_account = l_checkLogin(req).account;
-		const roles = l_checkLogin(req).roles;
 
 		account.find().populated();
-		progress.find({ query: {} });
-		project.find({ query: { account: found_account } });
 		
-		console.log(found_account + ' ' + roles);
+		let all_acc = account.data.fields[1].option;
+		let acc_role = all_acc.find( ({ value }) => value === found_account ).roles[0];
+		
+		project.find({ query: {} });
+		
+		
+		let member = {}
+		for(let i in account.data.fields) {
+			if(('model' in account.data.fields[i]) && account.data.fields[i].model === '_account'){
+				for(let j in account.data.fields[i].option) {
+					if(account.data.fields[i].option[j].value === found_account) {
+						member = {
+							value: account.data.fields[i].option[j].value,
+							text: account.data.fields[i].option[j].text,
+							roles: account.data.fields[i].option[j].roles[0],
+						}
+					}
+				}
+			}
+		}
+		console.log(member);
+		
+		let new_option = [];
+		for (let i in project.data.values) {
+			switch(acc_role){
+				case 'developer':
+					if(project.data.values[i].dev1 === found_account || project.data.values[i].dev2 === found_account || project.data.values[i].dev3 === found_account) {
+						new_option.push({
+							value: project.data.values[i].project_name,
+							text: project.data.values[i].project_name,
+						});
+					};
+					break;
+				case 'pm' :
+					if(project.data.values[i].pm === found_account) {
+						new_option.push({
+							value: project.data.values[i].project_name,
+							text: project.data.values[i].project_name,
+						});
+					};
+					break;
+				case 'client': 
+					if(project.data.values[i].client1 === found_account || project.data.values[i].client3 === found_account ) {
+						new_option.push({
+							value: project.data.values[i].project_name,
+							text: project.data.values[i].project_name,
+						});
+					};
+					break;
+				default: 
+					new_option.push({
+						value: project.data.values[i].project_name,
+						text: project.data.values[i].project_name,
+					});
+					break;
+			}	
+		}
+		let project_list = new_option.map(x => x.value);
+		if(member.roles === 'developer') {
+			progress.find({ query: { project: project_list, member: found_account} });
+		}
+		else {
+			progress.find({ query: { project: project_list }});
+		}
+				
 		if(Object.keys(progress.data.values).length === 0) {
 			progress = JSON.parse(JSON.stringify(progress.find()));
 			progress.data.values = {};
-		}		
-		let new_option = [];
-		for (let i in project.data.values) {
-			new_option.push({
-				value: project.data.values[i].project_name,
-				text: project.data.values[i].project_name,
-			})
 		}
-		let member = {
-			value: found_account,
-			text: found_account,
-		}
+		
 		for(let i in progress.data.fields) {
-			if( progress.data.fields[i].id === 'project') {
+			if( progress.data.fields[i].id === 'project' ) {
 				progress.data.fields[i].option = new_option;
 			}
-			if( progress.data.fields[i].id === 'member') {
-				progress.data.fields[i].option = member;
+			if( progress.data.fields[i].id === 'Approve' && member.roles === 'pm' ) {
+				progress.data.fields[i].show = true;
+			}
+			if( progress.data.fields[i].id === 'Approve' && member.roles != 'pm' ) {
+				progress.data.fields[i].show = false;
 			}
 		}
 		
 		res.send(progress);
+	})
+	
+	app.post('/api/progress', (req, res, next) => {
+		let account = new SR.Flexform.controller('progress');
+		let progress = new SR.Flexform.controller('progress');
+			
+		const found_account = l_checkLogin(req).account;
+		
+		account.find().populated();
+		progress.find({ query: {} });		
+
+		
+		let all_acc = account.data.fields[1].option;
+		let acc_role = all_acc.find( ({value}) => value === found_account).roles[0];
+		
+		let member = {}
+		for(let i in account.data.fields) {
+			if(('model' in account.data.fields[i]) && account.data.fields[i].model === '_account'){
+				for(let j in account.data.fields[i].option) {
+					if(account.data.fields[i].option[j].value === found_account) {
+						member = {
+							value: account.data.fields[i].option[j].value,
+							text: account.data.fields[i].option[j].text,
+							roles: account.data.fields[i].option[j].roles[0],
+						}
+						if(account.data.fields[i].id === 'Approve' && member.roles === 'pm') {
+							account.data.fields[i].show = true;
+						}
+					}
+				}
+			}
+		}
+		console.log(member);
+		
+		const submitData = req.body;
+		// console.log('body' + submitData);
+		submitData.member = found_account;
+		progress.create(submitData);
+		res.send(submitData);
 	})
 	
 	app.get('/api/progress/schema', (req, res, next) => {
@@ -395,34 +489,90 @@ module.exports = function (app) {
 		let account = new SR.Flexform.controller('progress');
 		
 		const found_account = l_checkLogin(req).account;
-		const roles = l_checkLogin(req).roles;
 
 		account.find().populated();
-		progress.find({ query: {} });
-		project.find({ query: { account: found_account } });
 		
-		console.log(found_account + ' ' + roles);
+		let all_acc = account.data.fields[1].option;
+		let acc_role = all_acc.find( ({ value }) => value === found_account ).roles[0];
+				
+		project.find({ query: {} });		
+		
+		let member = {}
+		for(let i in account.data.fields) {
+			if(('model' in account.data.fields[i]) && account.data.fields[i].model === '_account'){
+				for(let j in account.data.fields[i].option) {
+					if(account.data.fields[i].option[j].value === found_account) {
+						member = {
+							value: account.data.fields[i].option[j].value,
+							text: account.data.fields[i].option[j].text,
+							roles: account.data.fields[i].option[j].roles[0],
+						}
+						if(account.data.fields[i].id === 'Approve' && member.roles === 'pm') {
+							account.data.fields[i].show = true;
+						}
+					}
+				}
+			}
+		}
+		console.log(member);
+		
+		let new_option = [];
+		for (let i in project.data.values) {
+			switch(acc_role){
+				case 'developer':
+					if(project.data.values[i].dev1 === found_account || project.data.values[i].dev2 === found_account || project.data.values[i].dev3 === found_account) {
+						new_option.push({
+							value: project.data.values[i].project_name,
+							text: project.data.values[i].project_name,
+						});
+					};
+					break;
+				case 'pm' :
+					if(project.data.values[i].pm === found_account) {
+						new_option.push({
+							value: project.data.values[i].project_name,
+							text: project.data.values[i].project_name,
+						});
+					};
+					break;
+				case 'client': 
+					if(project.data.values[i].client1 === found_account || project.data.values[i].client3 === found_account ) {
+						new_option.push({
+							value: project.data.values[i].project_name,
+							text: project.data.values[i].project_name,
+						});
+					};
+					break;
+				default: 
+					new_option.push({
+						value: project.data.values[i].project_name,
+						text: project.data.values[i].project_name,
+					});
+					break;
+			}
+		}
+		let project_list = new_option.map(x => x.value);
+		if(member.roles === 'developer') {
+			progress.find({ query: { project: project_list, member: found_account} });
+		}
+		else {
+			progress.find({ query: { project: project_list }});
+		}
+				
 		if(Object.keys(progress.data.values).length === 0) {
 			progress = JSON.parse(JSON.stringify(progress.find()));
 			progress.data.values = {};
-		}		
-		let new_option = [];
-		for (let i in project.data.values) {
-			new_option.push({
-				value: project.data.values[i].project_name,
-				text: project.data.values[i].project_name,
-			})
 		}
-		let member = {
-			value: found_account,
-			text: found_account,
-		}
+		
 		for(let i in progress.data.fields) {
 			if( progress.data.fields[i].id === 'project') {
 				progress.data.fields[i].option = new_option;
 			}
-			if( progress.data.fields[i].id === 'member') {
-				progress.data.fields[i].option = member;
+			if( progress.data.fields[i].id === 'Approve' && member.roles === 'pm' ) {
+				progress.data.fields[i].show = true;
+			}
+			if( progress.data.fields[i].id === 'Approve' && member.roles != 'pm' ) {
+				progress.data.fields[i].show = false;
 			}
 		}
 		
@@ -434,21 +584,37 @@ module.exports = function (app) {
 		let d_controller = new SR.Flexform.controller('dev_cycles')
 		let account = new SR.Flexform.controller('project')
 		
-
 		const found_account = l_checkLogin(req).account;
 		
 		account.find().populated();
-		p_controller.find({ query: {} });
+		let all_acc = account.data.fields[3].option;
+		let login_acc = all_acc.find( ({ value }) => value === found_account );
+		console.log(login_acc);
+		switch (login_acc.roles[0]) {
+			case 'pm':
+				p_controller.find({ query: { pm: found_account } });
+				break;
+			// case 'dev': 
+			// 	p_controller.find({ query: { dev1: found_account }})
+			default: 
+				p_controller.find({ query: { } });
+				break;
+		}		
 		d_controller.find({ query: { account: found_account } });
 		
 		for(let i in account.data.fields) {
 			if('model' in account.data.fields[i]) {
+				let new_option = [];
 				for(let j in account.data.fields[i].option) {
-					account.data.fields[i].option[j] = {
-						value: account.data.fields[i].option[j].value,
-						text: account.data.fields[i].option[j].value,
+					if(account.data.fields[i].desc === account.data.fields[i].option[j].roles[0]){
+						new_option.push({
+							value: account.data.fields[i].option[j].value,
+							text: account.data.fields[i].option[j].text,
+							roles: account.data.fields[i].option[j].roles[0],
+						})
 					}
 				}
+				account.data.fields[i].option = new_option;
 			}
 		}
 			
@@ -477,22 +643,37 @@ module.exports = function (app) {
 		let d_controller = new SR.Flexform.controller('dev_cycles')
 		let account = new SR.Flexform.controller('project')
 		
-
 		const found_account = l_checkLogin(req).account;
 		
 		account.find().populated();
-		p_controller.find({ query: {} });
+		let all_acc = account.data.fields[3].option;
+		let login_acc = all_acc.find( ({ value }) => value === found_account );
+		console.log(login_acc);
+		switch (login_acc.roles[0]) {
+			case 'pm':
+				p_controller.find({ query: { pm: found_account } });
+				break;
+			// case 'dev': 
+			// 	p_controller.find({ query: { dev1: found_account }})
+			default: 
+				p_controller.find({ query: { } });
+				break;
+		}		
 		d_controller.find({ query: { account: found_account } });
-		
-		// console.log(JSON.stringify(account.data.fields));
 		
 		for(let i in account.data.fields) {
 			if('model' in account.data.fields[i]) {
-				for(let j in account.data.fields[i].option)
-				account.data.fields[i].option[j] = {
-					value: account.data.fields[i].option[j].value,
-					text: account.data.fields[i].option[j].value,
+				let new_option = [];
+				for(let j in account.data.fields[i].option) {
+					if(account.data.fields[i].desc === account.data.fields[i].option[j].roles[0]){
+						new_option.push({
+							value: account.data.fields[i].option[j].value,
+							text: account.data.fields[i].option[j].text,
+							roles: account.data.fields[i].option[j].roles[0],
+						})
+					}
 				}
+				account.data.fields[i].option = new_option;
 			}
 		}
 			
