@@ -49,23 +49,23 @@ module.exports = {
 			must: true,
 			show: true,
 		},
-		choose_company:{
-			name: 'Choose company',
-			type: 'choice',
-			desc: '',
-			must: true,
-			show: true,
-			required: true,
-			option: [
-				{
-					value: 'A',
-					text: 'A',
-				},
-				{
-					value: 'B',
-					text: 'B',
-				},
-			],
-		},
+		// choose_company:{
+		// 	name: 'Choose company',
+		// 	type: 'choice',
+		// 	desc: '',
+		// 	must: true,
+		// 	show: true,
+		// 	required: true,
+		// 	option: [
+		// 		{
+		// 			value: 'A',
+		// 			text: 'A',
+		// 		},
+		// 		{
+		// 			value: 'B',
+		// 			text: 'B',
+		// 		},
+		// 	],
+		// },
 	}
 };
