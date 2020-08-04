@@ -3,7 +3,7 @@ var l_cache = SR.State.get('cache');
 // language setting
 var l_lang = require('./language')('english');
 
-SR.Callback.onStart(function () {});
+SR.Callback.onStart(function () { });
 
 var l_form = SR.State.get('FlexFormMap');
 var l_accounts;
@@ -36,6 +36,10 @@ var l_checkLogin = function (req) {
 	LOG.warn('user not yet logined...');
 	return { control: { groups: [], permissions: [] } };
 };
+
+let time_calculation = function (start, end) {
+	return (end.getHours() + end.getMinutes() / 60) - (start.getHours() + start.getMinutes() / 60)
+}
 
 module.exports = function (app) {
 	app.get('/api/menu', (req, res) => {
@@ -176,6 +180,33 @@ module.exports = function (app) {
 					},
 				],
 			},
+			{
+				path: '/salary_filter',
+				redirect: '/salary_filter',
+				name: 'salary track',
+				meta: {
+					title: 'Salary Filter',
+					icon: 'salary_filter',
+				},
+				children: [
+					{
+						path: 'create',
+						name: 'Salary Filter',
+						type: 'create',
+						props: {
+							edit: true,
+						},
+						meta: {
+							title: 'Salary Filter',
+							icon: 'edit',
+							isUpdate: false,
+							roles: ['admin'],
+							submitUrl: '/api/salary_filter'
+						},
+					},
+				],
+			},
+
 			{
 				path: '/salary_sheet',
 				redirect: '/salary_sheet',
@@ -748,5 +779,57 @@ module.exports = function (app) {
 			controller.create(updateData.values).then;
 		}
 		res.send(controller);
+	})
+
+	app.post('/api/salary_filter', (req, res, next) => {
+		let filter = req.body
+		let progress = new SR.Flexform.controller('progress')
+		let salary_sheet = new SR.Flexform.controller('salary_sheet')
+		let isDev = filter.sort_settings == "dev"
+		let method = isDev ? JSON.parse(JSON.stringify(l_accounts)) :
+			new SR.Flexform.controller('project').find().data.values
+
+		Object.keys(method).forEach(method_id => {
+			let body = {}
+
+			if (isDev) {
+				body.member = method[method_id].account
+			} else {
+				body.project = method[method_id].project_name
+			}
+
+			progress.find(
+				{ query: body },
+				{ with_fields: false }
+			)
+
+			let values = progress.data.values
+			let pricing_method = 200 // TEST
+			let workload = 0
+			let salary = 0
+
+			Object.keys(values).forEach(id => {
+				console.log(values[id])
+				let time = time_calculation(
+					new Date(values[id].Starting_time),
+					new Date(values[id].End_time)
+				)
+				salary += (workload * pricing_method)
+				workload += time
+				console.log(time)
+			})
+
+			let salary_record = {
+				project: isDev ? "" : method[method_id].project_name,
+				identity: isDev ? method[method_id].control.groups[0] : "",
+				member: isDev ? method[method_id].account : "",
+				pricing_method: isDev ? pricing_method : "",
+				workload,
+				salary,
+			}
+
+			salary_sheet.create(salary_record)
+			res.sendStatus(200)
+		})
 	})
 };
