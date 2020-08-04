@@ -625,6 +625,7 @@ module.exports = function (app) {
 			let values = progress.data.values
 			let pricing_method = 200 // TEST
 			let workload = 0
+			let salary = 0
 
 			Object.keys(values).forEach(id => {
 				console.log(values[id])
@@ -632,20 +633,21 @@ module.exports = function (app) {
 					new Date(values[id].Starting_time),
 					new Date(values[id].End_time)
 				)
+				salary += (workload * pricing_method)
 				workload += time
 				console.log(time)
 			})
 
-			let salary = {
+			let salary_record = {
 				project: isDev ? "" : method[method_id].project_name,
 				identity: isDev ? method[method_id].control.groups[0] : "",
 				member: isDev ? method[method_id].account : "",
 				pricing_method: isDev ? pricing_method : "",
 				workload,
-				salary: workload * pricing_method,
+				salary,
 			}
 
-			salary_sheet.create(salary)
+			salary_sheet.create(salary_record)
 			res.sendStatus(200)
 		})
 	})
