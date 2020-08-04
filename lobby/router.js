@@ -505,7 +505,7 @@ module.exports = function (app) {
 				}
 			}
 		}
-		console.log(member);
+		// console.log(member);
 		
 		const submitData = req.body;
 		// console.log('body' + submitData);
@@ -545,7 +545,7 @@ module.exports = function (app) {
 				}
 			}
 		}
-		console.log(member);
+		// console.log(member);
 		
 		let new_option = [];
 		for (let i in project.data.values) {
@@ -620,7 +620,7 @@ module.exports = function (app) {
 		account.find().populated();
 		let all_acc = account.data.fields[3].option;
 		let login_acc = all_acc.find( ({ value }) => value === found_account );
-		console.log(login_acc);
+
 		switch (login_acc.roles[0]) {
 			case 'pm':
 				p_controller.find({ query: { pm: found_account } });
@@ -679,7 +679,7 @@ module.exports = function (app) {
 		account.find().populated();
 		let all_acc = account.data.fields[3].option;
 		let login_acc = all_acc.find( ({ value }) => value === found_account );
-		console.log(login_acc);
+
 		switch (login_acc.roles[0]) {
 			case 'pm':
 				p_controller.find({ query: { pm: found_account } });
