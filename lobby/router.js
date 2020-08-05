@@ -806,7 +806,9 @@ module.exports = function (app) {
 			let values = progress.data.values
 			let pricing_method = 200 // TEST
 			let workload = 0
+			let ot = 0
 			let salary = 0
+			let ot_pay = 0
 
 			Object.keys(values).forEach(id => {
 				console.log(values[id])
@@ -814,8 +816,16 @@ module.exports = function (app) {
 					new Date(values[id].Starting_time),
 					new Date(values[id].End_time)
 				)
-				salary += (workload * pricing_method)
-				workload += time
+				
+				// overtime or not.
+				if (values[id].special_price_setting) {
+					ot += time 
+					ot_pay += (time * pricing_method)
+				} else {
+					workload += time
+				}
+				
+				salary += (time * pricing_method)
 				console.log(time)
 			})
 
@@ -825,11 +835,12 @@ module.exports = function (app) {
 				member: isDev ? method[method_id].account : "",
 				pricing_method: isDev ? pricing_method : "",
 				workload,
+				ot,
+				ot_pay,
 				salary,
 			}
 
 			salary_sheet.create(salary_record)
-			res.sendStatus(200)
 		})
 	})
 };

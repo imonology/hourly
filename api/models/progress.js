@@ -39,12 +39,7 @@ module.exports = {
 			must: true,
 			show: true,
 			required: false,
-			default: [
-				{
-					value: 'Normal',
-					text: 'Normal',
-				},
-			],
+			default: false,
 		},
 		Starting_time: {
 			name: 'Starting time',
