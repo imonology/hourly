@@ -1,15 +1,6 @@
 module.exports = {
-	name: 'salary sheet',
+	name: 'salary sum record',
 	fields: {
-		progress_id: {
-			name: 'Progress_Id',
-			type: 'string',
-			desc: '',
-			unique: true,
-			must: true,
-			show: true, 
-			required: true,
-		},
 		project: { 
 			name: 'Project',
 			type: 'string',
@@ -72,19 +63,6 @@ module.exports = {
 			must: true,
 			show: true,
 			required: false,
-		},
-		starting_time: {
-			name: 'Starting time',
-			type: 'datetime',
-			must: true,
-			show: true,
-			
-		},
-		end_time: {
-			name: 'End Time',
-			type: 'datetime',
-			must: true,
-			show: true,
 		},
 	}
 };

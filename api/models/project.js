@@ -19,6 +19,19 @@ module.exports = {
 			show: true,
 			require: false
 		},
+		organization: {
+			name: 'Organization',
+			type: 'choice',
+			desc: '',
+			option: {
+				form: 'organization',
+				value: 'company_name',
+				text: 'company_name',
+			},
+			must: true,
+			show: true,
+			required: true,
+		},
 		sub_dev_cycle: {
 			name: 'Dev cycles',
 			// type: 'sub_model',

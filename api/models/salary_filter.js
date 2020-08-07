@@ -1,5 +1,5 @@
 module.exports = {
-	name: 'salary sheet',
+	name: 'salary filter',
 	fields: {
 		sort_settings: {
 			name: 'Sort settings',
@@ -14,12 +14,16 @@ module.exports = {
 					text: 'By developer',
 				},
 				{
-					value: 'proj',
+					value: 'project',
 					text: 'By project',
 				},
+				// {
+				// 	value: 'company',
+				// 	text: 'By Company'
+				// },
 			],
 		},
-		choose_time: {
+		time_setting: {
 			name: 'Time sort',
 			type: 'choice',
 			desc: '',
@@ -28,23 +32,17 @@ module.exports = {
 			required: true,
 			option: [
 				{
-					value: 'Choose Week',
+					value: 'week',
 					text: 'Choose Week',
 				},
 				{
-					value: 'Choose Month',
+					value: 'month',
 					text: 'Choose Month',
 				},
 			],
 		},
-		week_time: {
-			name: 'Week time',
-			type: 'datetime',
-			must: true,
-			show: true,
-		},
-		month_time: {
-			name: 'Month Time',
+		choose_time: {
+			name: 'Time',
 			type: 'date',
 			must: true,
 			show: true,

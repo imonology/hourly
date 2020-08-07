@@ -37,20 +37,16 @@ module.exports = {
 			shape: 'checkbox',
 			desc: '',
 			must: true,
-			show: true,
 			required: false,
-			default: [
-				{
-					value: 'Normal',
-					text: 'Normal',
-				},
-			],
+			show:  true,
+			default: false
 		},
 		Starting_time: {
 			name: 'Starting time',
 			type: 'datetime',
 			must: true,
 			show: true,
+			
 		},
 		End_time: {
 			name: 'End Time',
@@ -90,7 +86,7 @@ module.exports = {
 			must: true,
 			required: false,
 			show:  false,
-			
+			default: false,
 		}
 	}
 };

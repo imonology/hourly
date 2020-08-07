@@ -38,7 +38,58 @@ var l_checkLogin = function (req) {
 };
 
 let time_calculation = function (start, end) {
-	return (end.getHours() + end.getMinutes() / 60) - (start.getHours() + start.getMinutes() / 60)
+	const hours = (end.getTime() - start.getTime())/3600000
+	return (hours.toFixed(2))
+}
+
+let getWeekNumber = function(date) {
+	let d = new Date(date)
+    d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+    d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay()||7));
+    // Get first day of year
+    var yearStart = new Date(Date.UTC(d.getUTCFullYear(),0,1));
+    // Calculate full weeks to nearest Thursday
+    var weekNo = Math.ceil(( ( (d - yearStart) / 86400000) + 1)/7);
+    // Return array of year and week number
+	// console.log(weekNo)
+    return {year: d.getUTCFullYear(), week: weekNo};
+}
+	
+let isSameWeek = function(date1, date2) {
+	let week1 = getWeekNumber(date1)
+	let week2 = getWeekNumber(date2)
+	if(week1.year === week2.year && week1.week === week2.week){
+		return true
+	}
+	else {
+		return false
+	} 
+}
+
+let isSameMonth = function(date1, date2) {
+	let month1 = new Date(date1)
+	let month2 = new Date(date2)
+	if(month1.getYear() == month2.getYear() && month1.getMonth() == month2.getMonth()) {
+		return true
+	}
+	else {
+		return false
+	}
+}
+
+let distinct = function(list) {
+	let result = [];
+	let map = new Map();
+	for (const item of list) {
+		if(!map.has(item.project)){
+			map.set(item.project, true);    // set any value to Map
+			result.push({
+				project: item.project,
+				member: item.member
+			});
+		}
+	}
+	return result
 }
 
 module.exports = function (app) {
@@ -152,7 +203,7 @@ module.exports = function (app) {
 							icon: 'edit',
 							form_name: 'progress',
 							isUpdate: false,
-							roles: ['developer'],
+							roles: ['developer', 'pm'],
 							schemaUrl: '/api/progress/schema',
 						},
 					},
@@ -208,29 +259,29 @@ module.exports = function (app) {
 			},
 
 			{
-				path: '/salary_sheet',
-				redirect: '/salary_sheet',
-				name: 'salary track',
+				path: '/salary_sum_record',
+				redirect: '/salary_sum_record',
+				name: 'salary sum record',
 				meta: {
-					title: 'Salary',
-					icon: 'salary_sheet',
+					title: 'Salary Record',
+					icon: 'salary_sum_record',
 				},
 				children: [
-					{
-						path: 'create',
-						name: 'set salary',
-						type: 'create',
-						props: {
-							edit: true,
-						},
-						meta: {
-							title: 'Set Salary',
-							icon: 'edit',
-							form_name: 'salary_sheet',
-							isUpdate: false,
-							roles: ['admin'],
-						},
-					},
+					// {
+					// 	path: 'create',
+					// 	name: 'set salary',
+					// 	type: 'create',
+					// 	props: {
+					// 		edit: true,
+					// 	},
+					// 	meta: {
+					// 		title: 'Set Salary',
+					// 		icon: 'edit',
+					// 		form_name: 'salary_sheet',
+					// 		isUpdate: false,
+					// 		roles: ['admin'],
+					// 	},
+					// },
 					{
 						path: 'list',
 						name: 'get salary list',
@@ -240,8 +291,10 @@ module.exports = function (app) {
 						},
 						meta: {
 							title: 'Salary List',
-							// icon: 'edit',
+							icon: 'edit',
+							isUpdate: false,
 							roles: ['admin'],
+							schemaUrl: '/api/salary_sum_record',
 						},
 					},
 				],
@@ -362,6 +415,44 @@ module.exports = function (app) {
 					},
 				],
 			},
+			{
+				path: '/organization',
+				redirect: '/organization',
+				name: 'organization',
+				meta: {
+					icon: 'Organization',
+					title: 'Organization',
+				},
+				children: [
+					{
+						path: 'create',
+						name: 'Create organization',
+						type: 'create',
+						props: {
+							edit: true,
+						},
+						meta: {
+							title: 'Organizaion',
+							icon: 'edit',
+							form_name: 'organization',
+							roles: ['admin'],
+						},
+					},
+					{
+						path: 'list',
+						name: 'Organization list',
+						type: 'list',
+						props: {
+							edit: true,
+						},
+						meta: {
+							title: 'Organizaion',
+							icon: 'edit',
+							roles: ['admin'],
+						},
+					},
+				],
+			}
 		];
 		res.send(menu);
 	});
@@ -394,7 +485,6 @@ module.exports = function (app) {
 		let acc_role = all_acc.find( ({ value }) => value === found_account ).roles[0];
 		
 		project.find({ query: {} });
-		
 		
 		let member = {}
 		for(let i in account.data.fields) {
@@ -478,13 +568,13 @@ module.exports = function (app) {
 	app.post('/api/progress', (req, res, next) => {
 		let account = new SR.Flexform.controller('progress');
 		let progress = new SR.Flexform.controller('progress');
+		let salary_record = new SR.Flexform.controller('salary_sheet');
 			
 		const found_account = l_checkLogin(req).account;
 		
 		account.find().populated();
-		progress.find({ query: {} });		
+		progress.find();		
 
-		
 		let all_acc = account.data.fields[1].option;
 		let acc_role = all_acc.find( ({value}) => value === found_account).roles[0];
 		
@@ -505,13 +595,15 @@ module.exports = function (app) {
 				}
 			}
 		}
-		// console.log(member);
 		
 		const submitData = req.body;
 		// console.log('body' + submitData);
 		submitData.member = found_account;
 		progress.create(submitData);
-		res.send(submitData);
+		
+		progress.find({query: { member: found_account }});
+		console.log(JSON.stringify(progress.data));
+		res.send(progress.data.values);
 	})
 	
 	app.get('/api/progress/schema', (req, res, next) => {
@@ -613,12 +705,13 @@ module.exports = function (app) {
 	app.get('/api/project/schema', (req, res, next) => {
 		let p_controller = new SR.Flexform.controller('project')
 		let d_controller = new SR.Flexform.controller('dev_cycles')
+		let o_controller = new SR.Flexform.controller('organization')
 		let account = new SR.Flexform.controller('project')
 		
 		const found_account = l_checkLogin(req).account;
 		
 		account.find().populated();
-		let all_acc = account.data.fields[3].option;
+		let all_acc = account.data.fields[4].option;
 		let login_acc = all_acc.find( ({ value }) => value === found_account );
 
 		switch (login_acc.roles[0]) {
@@ -631,7 +724,8 @@ module.exports = function (app) {
 				p_controller.find({ query: { } });
 				break;
 		}		
-		d_controller.find({ query: { account: found_account } });
+		o_controller.find({});
+		d_controller.find({});
 		
 		for(let i in account.data.fields) {
 			if('model' in account.data.fields[i]) {
@@ -657,11 +751,19 @@ module.exports = function (app) {
 		let option = Object.keys(d_controller.data.values).map((elem, i, arr) => {
 			return { text: d_controller.data.values[elem].applicant, value: elem }
 		})
+		let organization = Object.keys(o_controller.data.values).map((elem, i, arr) => {
+			return { text: o_controller.data.values[elem].company_name, value: elem }
+		})
 		
 		for (let i in p_controller.data.fields) {
 			if(p_controller.data.fields[i].id === 'sub_dev_cycle' ){
 				// p_controller.data.fields[i].fields.cycle.option = option
 				p_controller.data.fields[i].option = option
+
+			}
+			if(p_controller.data.fields[i].id === 'organization' ){
+				// p_controller.data.fields[i].fields.cycle.option = option
+				p_controller.data.fields[i].option = organization
 
 			}
 		}
@@ -672,12 +774,13 @@ module.exports = function (app) {
 	app.get('/api/project', (req, res, next) => {
 		let p_controller = new SR.Flexform.controller('project')
 		let d_controller = new SR.Flexform.controller('dev_cycles')
+		let o_controller = new SR.Flexform.controller('organization')
 		let account = new SR.Flexform.controller('project')
 		
 		const found_account = l_checkLogin(req).account;
 		
 		account.find().populated();
-		let all_acc = account.data.fields[3].option;
+		let all_acc = account.data.fields[4].option;
 		let login_acc = all_acc.find( ({ value }) => value === found_account );
 
 		switch (login_acc.roles[0]) {
@@ -689,8 +792,9 @@ module.exports = function (app) {
 			default: 
 				p_controller.find({ query: { } });
 				break;
-		}		
-		d_controller.find({ query: { account: found_account } });
+		}
+		o_controller.find({});
+		d_controller.find({});
 		
 		for(let i in account.data.fields) {
 			if('model' in account.data.fields[i]) {
@@ -716,6 +820,22 @@ module.exports = function (app) {
 		let option = Object.keys(d_controller.data.values).map((elem, i, arr) => {
 			return { text: d_controller.data.values[elem].applicant, value: elem }
 		})
+		let organization = Object.keys(o_controller.data.values).map((elem, i, arr) => {
+			return { text: o_controller.data.values[elem].company_name, value: elem }
+		})
+		
+		for (let i in p_controller.data.fields) {
+			if(p_controller.data.fields[i].id === 'sub_dev_cycle' ){
+				// p_controller.data.fields[i].fields.cycle.option = option
+				p_controller.data.fields[i].option = option
+
+			}
+			if(p_controller.data.fields[i].id === 'organization' ){
+				// p_controller.data.fields[i].fields.cycle.option = option
+				p_controller.data.fields[i].option = organization
+
+			}
+		}
 
 		for (let i in p_controller.data.fields) {
 			if(p_controller.data.fields[i].id === 'sub_dev_cycle' ){
@@ -735,32 +855,9 @@ module.exports = function (app) {
 		
 		account.findOne({ query: { account: found_account } });
 		console.log('acc ' + Object.keys(account.data).length);
-		// console.log('project ' + Object.keys(project.data.values)[0]);
 		
 		res.send(account);
 	});
-	
-// 	app.get('/api/get_info', (req, res, next) => {
-// 		let info = new SR.Flexform.controller('info');
-// 		let project = new SR.Flexform.controller('project');
-// 		let account = new SR.Flexform.controller('_account');
-// 		const found_account = l_checkLogin(req).account;
-// 		let proj = Object.keys(project.data.values)[0];
-// 		let acc = Object.keys(account.data.values)[0];
-// 		console.log('project ' + proj);
-// 		console.log('account ' + acc);
-// 		info.findOne({ query: { account: found_account } });
-// 		// console.log(controller.findOne);
-// 		console.log(info.data.values);
-// 		if (Object.keys(info.data.values).length === 0) {
-// 			console.log('AAAA');
-// 			info = JSON.parse(JSON.stringify(info.find()));
-// 			info.data.values = {};
-// 		}
-		
-
-// 		res.send(info);
-// 	});
 
 	app.patch('/api/info', (req, res, next) => {
 		let controller = new SR.Flexform.controller('info');
@@ -780,56 +877,216 @@ module.exports = function (app) {
 		}
 		res.send(controller);
 	})
+	
+	app.get('/api/salary_sum_record', (req, res, next) => {
+		let salary_filter = new SR.Flexform.controller('salary_filter')
+		let salary_sum_record = new SR.Flexform.controller('salary_sum_record')
+		let project = new SR.Flexform.controller('project')
+		let proj_list = []
+		
+		project.find()
+		Object.keys(project.data.values).forEach(id => {
+			proj_list.push(project.data.values[id].project_name)
+		})
+		
+		console.log(proj_list)
+		
+		salary_filter.find({query: {}})
+		
+		Object.keys(salary_filter.data.values).forEach(id => {
+			console.log(JSON.stringify(salary_filter.data.values[id]))
+			if (salary_filter.data.values[id].sort_settings === 'dev') {
+				salary_sum_record.find({ query: {project: ''} });	
+			}
+			if (salary_filter.data.values[id].sort_settings === 'project') {
+				salary_sum_record.find({ query: {project: proj_list}});
+			}
+		})
+		// salary_sum_record.find({ query: {} });	
+		
+		res.send(salary_sum_record)
+	})
 
 	app.post('/api/salary_filter', (req, res, next) => {
 		let filter = req.body
+		let salary_filter = new SR.Flexform.controller('salary_filter')
 		let progress = new SR.Flexform.controller('progress')
 		let salary_sheet = new SR.Flexform.controller('salary_sheet')
-		let isDev = filter.sort_settings == "dev"
-		let method = isDev ? JSON.parse(JSON.stringify(l_accounts)) :
-			new SR.Flexform.controller('project').find().data.values
-
+		let salary_sum_record = new SR.Flexform.controller('salary_sum_record')
+		let method = JSON.parse(JSON.stringify(l_accounts))
+		let acc = [];
+		
 		Object.keys(method).forEach(method_id => {
-			let body = {}
-
-			if (isDev) {
-				body.member = method[method_id].account
-			} else {
-				body.project = method[method_id].project_name
+			if(method[method_id].control.groups[0] === "developer"){
+				acc.push({
+					member: method[method_id].account,
+					role: method[method_id].control.groups[0],
+				});
 			}
-
-			progress.find(
-				{ query: body },
-				{ with_fields: false }
-			)
-
-			let values = progress.data.values
-			let pricing_method = 200 // TEST
-			let workload = 0
-			let salary = 0
-
-			Object.keys(values).forEach(id => {
-				console.log(values[id])
-				let time = time_calculation(
-					new Date(values[id].Starting_time),
-					new Date(values[id].End_time)
-				)
-				salary += (workload * pricing_method)
-				workload += time
-				console.log(time)
-			})
-
-			let salary_record = {
-				project: isDev ? "" : method[method_id].project_name,
-				identity: isDev ? method[method_id].control.groups[0] : "",
-				member: isDev ? method[method_id].account : "",
-				pricing_method: isDev ? pricing_method : "",
-				workload,
-				salary,
-			}
-
-			salary_sheet.create(salary_record)
-			res.sendStatus(200)
 		})
+		
+		progress.find({query: {member: acc.map(x => x.member), Approve: true}});
+		
+		let values = progress.data.values
+		let pricing_method = 200 // TEST
+		let workload = 0
+		let salary = 0
+		let salary_progress_record = {}
+		let a = []
+		let b = []
+		
+		salary_sheet.find({query: {}})
+		
+		Object.keys(salary_sheet.data.values).forEach(id => {
+				a.push(salary_sheet.data.values[id].progress_id)
+			})
+		Object.keys(values).forEach(id => {
+				b.push(id)
+			})
+		
+		var difference = a.filter(x => b.indexOf(x) === -1);
+		console.log(difference);
+		
+		salary_sheet.find({query: {progress_id: difference}})
+		
+		Object.keys(salary_sheet.data.values).forEach(id => {
+			let obj = { 
+				record_id: id
+			}
+			salary_sheet.destroy(obj)
+		})
+		
+		Object.keys(values).forEach(async id => {
+			
+			let time = time_calculation(
+						new Date(values[id].Starting_time),
+						new Date(values[id].End_time)
+					)
+			salary = (time * pricing_method)
+			workload = time
+			
+			let role = acc.find(x => x.member === values[id].member).role
+			
+			salary_progress_record = {
+					progress_id: id,
+					project: values[id].project,
+					identity: role,
+					member: values[id].member,
+					pricing_method: pricing_method,
+					workload,
+					salary,
+					start_time: values[id].Starting_time,
+					end_time: values[id].End_time,		
+			}
+					
+			salary_sheet.findOne({query: {progress_id: id}});
+			if(Object.keys(salary_sheet.data.values).length === 0) {
+				await salary_sheet.create(salary_progress_record)		
+			}
+		})
+	
+		salary_filter.find({query: {}})
+		Object.keys(salary_filter.data.values).forEach(id => {
+				let obj = { 
+					record_id: id
+				}
+				salary_filter.destroy(obj)
+			})
+		salary_filter.create(filter)
+		
+		for (let i in acc) {
+			
+			salary_sum_record.find()
+			Object.keys(salary_sum_record.data.values).forEach(id => {
+				let obj = { 
+					record_id: id
+				}
+				salary_sum_record.destroy(obj)
+			})
+			
+			salary_sheet.find({query: { member: acc[i].member}})
+			let salary_record = salary_sheet.data.values
+			let total_workload = 0
+			let total_salary = 0
+			let sum_record = {}
+			let project_record = {}
+			let list = []
+			
+			Object.keys(salary_record).forEach(id => {
+				list.push({
+					project: salary_record[id].project,
+					member: salary_record[id].member,
+				})
+			})
+			
+			list = distinct(list)			
+			if(filter.sort_settings === 'dev') {
+				Object.keys(salary_record).forEach(id => {
+					if(filter.time_setting === 'week') {
+						if(isSameWeek(filter.choose_time, salary_record[id].start_time) === true || isSameWeek(filter.choose_time, salary_record[id].end_time) === true) {
+							total_workload += salary_record[id].workload
+							total_salary += salary_record[id].salary
+							
+						}
+					}
+					if(filter.time_setting === 'month') {
+						if(isSameMonth(filter.choose_time, salary_record[id].start_time) === true || isSameWeek(filter.choose_time, salary_record[id].end_time) === true) {
+							total_workload += salary_record[id].workload
+							total_salary += salary_record[id].salary
+						}
+					}
+				})
+				sum_record = {
+						project: '',
+						member: acc[i].member,
+						workload: total_workload,
+						salary: total_salary,
+						identity: acc.find(x => x.member === acc[i].member).role,
+						pricing_method: pricing_method,
+
+				}
+
+				salary_sum_record.create(sum_record)
+			}
+			if(filter.sort_settings === 'project') {
+				for(var j in list) {
+					let total_workload_proj = 0
+					let total_salary_proj = 0
+					let project = undefined
+					Object.keys(salary_record).forEach(id => {
+						if(filter.time_setting === 'week') {
+							if(isSameWeek(filter.choose_time, salary_record[id].start_time) === true || isSameWeek(filter.choose_time, salary_record[id].end_time) === true) {
+									if(list[j].project === salary_record[id].project && list[j].member === salary_record[id].member){
+										total_workload_proj += salary_record[id].workload
+										total_salary_proj += salary_record[id].salary
+										project = salary_record[id].project
+									}
+							}
+						}
+						if(filter.time_setting === 'month') {
+							if(isSameMonth(filter.choose_time, salary_record[id].start_time) === true || isSameWeek(filter.choose_time, salary_record[id].end_time) === true) {
+									if(list[j].project === salary_record[id].project && list[j].member === salary_record[id].member){
+										total_workload_proj += salary_record[id].workload
+										total_salary_proj += salary_record[id].salary
+										project = salary_record[id].project
+									}
+							}
+						}
+					})
+					
+				sum_record = {
+						project: project,
+						member: acc[i].member,
+						workload: total_workload_proj,
+						salary: total_salary_proj,
+						identity: acc.find(x => x.member === acc[i].member).role,
+						pricing_method: pricing_method,
+					}
+
+				salary_sum_record.create(sum_record)
+				}
+			}			
+		}
+		res.send(progress);
 	})
 };
