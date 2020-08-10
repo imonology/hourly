@@ -77,20 +77,20 @@ let isSameMonth = function(date1, date2) {
 	}
 }
 
-let distinct = function(list) {
-	let result = [];
-	let map = new Map();
-	for (const item of list) {
-		if(!map.has(item.project)){
-			map.set(item.project, true);    // set any value to Map
-			result.push({
-				project: item.project,
-				member: item.member
-			});
-		}
-	}
-	return result
-}
+// let distinct = function(list) {
+// 	let result = [];
+// 	let map = new Map();
+// 	for (const item of list) {
+// 		if(!map.has(item.project)){
+// 			map.set(item.project, true);    // set any value to Map
+// 			result.push({
+// 				project: item.project,
+// 				member: item.member
+// 			});
+// 		}
+// 	}
+// 	return result
+// }
 
 module.exports = function (app) {
 	app.get('/api/menu', (req, res) => {
@@ -294,7 +294,7 @@ module.exports = function (app) {
 							icon: 'edit',
 							isUpdate: false,
 							roles: ['admin'],
-							schemaUrl: '/api/salary_sum_record',
+							// schemaUrl: '/api/salary_sum_record',
 						},
 					},
 				],
@@ -878,34 +878,33 @@ module.exports = function (app) {
 		res.send(controller);
 	})
 	
-	app.get('/api/salary_sum_record', (req, res, next) => {
-		let salary_filter = new SR.Flexform.controller('salary_filter')
-		let salary_sum_record = new SR.Flexform.controller('salary_sum_record')
-		let project = new SR.Flexform.controller('project')
-		let proj_list = []
+// 	app.get('/api/salary_sum_record', (req, res, next) => {
+// 		// let salary_filter = new SR.Flexform.controller('salary_filter')
+// 		let salary_sum_record = new SR.Flexform.controller('salary_sum_record')
+// 		let project = new SR.Flexform.controller('project')
+// 		let proj_list = []
 		
-		project.find()
-		Object.keys(project.data.values).forEach(id => {
-			proj_list.push(project.data.values[id].project_name)
-		})
+// 		project.find()
+// 		Object.keys(project.data.values).forEach(id => {
+// 			proj_list.push(project.data.values[id].project_name)
+// 		})
 		
-		console.log(proj_list)
+// 		console.log(proj_list)
+// 		// salary_filter.find({query: {}})
 		
-		salary_filter.find({query: {}})
+// 		// Object.keys(salary_filter.data.values).forEach(id => {
+// 		// 	console.log(JSON.stringify(salary_filter.data.values[id]))
+// 		// 	if (salary_filter.data.values[id].sort_settings === 'dev') {
+// 		// 		salary_sum_record.find({ query: {project: ''} });	
+// 		// 	}
+// 		// 	if (salary_filter.data.values[id].sort_settings === 'project') {
+// 		// 		salary_sum_record.find({ query: {project: proj_list}});
+// 		// 	}
+// 		// })
+// 		salary_sum_record.find({ query: {} });	
 		
-		Object.keys(salary_filter.data.values).forEach(id => {
-			console.log(JSON.stringify(salary_filter.data.values[id]))
-			if (salary_filter.data.values[id].sort_settings === 'dev') {
-				salary_sum_record.find({ query: {project: ''} });	
-			}
-			if (salary_filter.data.values[id].sort_settings === 'project') {
-				salary_sum_record.find({ query: {project: proj_list}});
-			}
-		})
-		// salary_sum_record.find({ query: {} });	
-		
-		res.send(salary_sum_record)
-	})
+// 		res.send(salary_sum_record)
+// 	})
 
 	app.post('/api/salary_filter', (req, res, next) => {
 		let filter = req.body
@@ -915,7 +914,17 @@ module.exports = function (app) {
 		let salary_sum_record = new SR.Flexform.controller('salary_sum_record')
 		let method = JSON.parse(JSON.stringify(l_accounts))
 		let acc = [];
+		let project = new SR.Flexform.controller('project')
+		let proj_list = []
 		
+		//List project  
+		project.find()
+		Object.keys(project.data.values).forEach(id => {
+			proj_list.push(project.data.values[id].project_name)
+		})
+		console.log(proj_list)
+		
+		//List developer account
 		Object.keys(method).forEach(method_id => {
 			if(method[method_id].control.groups[0] === "developer"){
 				acc.push({
@@ -935,8 +944,8 @@ module.exports = function (app) {
 		let a = []
 		let b = []
 		
+		//delete salary_sheet which progress have been removed
 		salary_sheet.find({query: {}})
-		
 		Object.keys(salary_sheet.data.values).forEach(id => {
 				a.push(salary_sheet.data.values[id].progress_id)
 			})
@@ -956,6 +965,7 @@ module.exports = function (app) {
 			salary_sheet.destroy(obj)
 		})
 		
+		//create salary_sheet from progress record that have been approved
 		Object.keys(values).forEach(async id => {
 			
 			let time = time_calculation(
@@ -985,6 +995,7 @@ module.exports = function (app) {
 			}
 		})
 	
+		//delete previoud salary_filter and create new one 
 		salary_filter.find({query: {}})
 		Object.keys(salary_filter.data.values).forEach(id => {
 				let obj = { 
@@ -994,69 +1005,78 @@ module.exports = function (app) {
 			})
 		salary_filter.create(filter)
 		
-		for (let i in acc) {
-			
-			salary_sum_record.find()
-			Object.keys(salary_sum_record.data.values).forEach(id => {
+		//delete all past salary_sum_record
+		salary_sum_record.find()
+		Object.keys(salary_sum_record.data.values).forEach(id => {
 				let obj = { 
 					record_id: id
 				}
 				salary_sum_record.destroy(obj)
 			})
-			
-			salary_sheet.find({query: { member: acc[i].member}})
-			let salary_record = salary_sheet.data.values
-			let total_workload = 0
-			let total_salary = 0
-			let sum_record = {}
-			let project_record = {}
-			let list = []
-			
-			Object.keys(salary_record).forEach(id => {
-				list.push({
-					project: salary_record[id].project,
-					member: salary_record[id].member,
-				})
-			})
-			
-			list = distinct(list)			
-			if(filter.sort_settings === 'dev') {
-				Object.keys(salary_record).forEach(id => {
-					if(filter.time_setting === 'week') {
-						if(isSameWeek(filter.choose_time, salary_record[id].start_time) === true || isSameWeek(filter.choose_time, salary_record[id].end_time) === true) {
-							total_workload += salary_record[id].workload
-							total_salary += salary_record[id].salary
-							
-						}
-					}
-					if(filter.time_setting === 'month') {
-						if(isSameMonth(filter.choose_time, salary_record[id].start_time) === true || isSameWeek(filter.choose_time, salary_record[id].end_time) === true) {
-							total_workload += salary_record[id].workload
-							total_salary += salary_record[id].salary
-						}
-					}
-				})
-				sum_record = {
-						project: '',
-						member: acc[i].member,
-						workload: total_workload,
-						salary: total_salary,
-						identity: acc.find(x => x.member === acc[i].member).role,
-						pricing_method: pricing_method,
 
-				}
+		//create new salary_sum_record according to filter 
+		salary_sheet.find({query: {}})
+		console.log('salary_sheet' + JSON.stringify(salary_sheet))
+		let salary_record = salary_sheet.data.values
+		let sum_record = {}
+		// let list = []
+		
+		if(filter.sort_settings === 'dev') {
+			for (let i in acc) {
+				let total_workload = 0
+				let total_salary = 0
+// 				Object.keys(salary_record).forEach(id => {
+// 					list.push({
+// 						project: salary_record[id].project,
+// 						member: salary_record[id].member,
+// 					})
+// 				})
 
-				salary_sum_record.create(sum_record)
+// 				list = distinct(list)			
+				// if(filter.sort_settings === 'dev') {
+					Object.keys(salary_record).forEach(id => {
+						if(filter.time_setting === 'week') {
+							if(isSameWeek(filter.choose_time, salary_record[id].start_time) === true || isSameWeek(filter.choose_time, salary_record[id].end_time) === true) {
+								if(acc[i].member === salary_record[id].member) {
+									total_workload += salary_record[id].workload
+									total_salary += salary_record[id].salary
+								}
+							}
+						}
+						if(filter.time_setting === 'month') {
+							if(isSameMonth(filter.choose_time, salary_record[id].start_time) === true || isSameWeek(filter.choose_time, salary_record[id].end_time) === true) {
+								if(acc[i].member === salary_record[id].member) {
+									total_workload += salary_record[id].workload
+									total_salary += salary_record[id].salary
+								}
+							}
+						}
+					})
+					sum_record = {
+							project: '',
+							member: acc[i].member,
+							workload: total_workload,
+							salary: total_salary,
+							identity: acc.find(x => x.member === acc[i].member).role,
+							pricing_method: pricing_method,
+
+					}
+
+					salary_sum_record.create(sum_record)
+				// }
 			}
+		}
+		
+		
 			if(filter.sort_settings === 'project') {
-				for(var j in list) {
+				for(var j in proj_list) {
 					let total_workload_proj = 0
 					let total_salary_proj = 0
 					let project = undefined
 					Object.keys(salary_record).forEach(id => {
 						if(filter.time_setting === 'week') {
 							if(isSameWeek(filter.choose_time, salary_record[id].start_time) === true || isSameWeek(filter.choose_time, salary_record[id].end_time) === true) {
-									if(list[j].project === salary_record[id].project && list[j].member === salary_record[id].member){
+									if(proj_list[j] === salary_record[id].project){
 										total_workload_proj += salary_record[id].workload
 										total_salary_proj += salary_record[id].salary
 										project = salary_record[id].project
@@ -1065,7 +1085,7 @@ module.exports = function (app) {
 						}
 						if(filter.time_setting === 'month') {
 							if(isSameMonth(filter.choose_time, salary_record[id].start_time) === true || isSameWeek(filter.choose_time, salary_record[id].end_time) === true) {
-									if(list[j].project === salary_record[id].project && list[j].member === salary_record[id].member){
+									if(proj_list[j] === salary_record[id].project){
 										total_workload_proj += salary_record[id].workload
 										total_salary_proj += salary_record[id].salary
 										project = salary_record[id].project
@@ -1075,18 +1095,18 @@ module.exports = function (app) {
 					})
 					
 				sum_record = {
-						project: project,
-						member: acc[i].member,
+						project: proj_list[j],
+						member: '',
 						workload: total_workload_proj,
 						salary: total_salary_proj,
-						identity: acc.find(x => x.member === acc[i].member).role,
+						identity: '',
 						pricing_method: pricing_method,
 					}
 
 				salary_sum_record.create(sum_record)
 				}
 			}			
-		}
+		
 		res.send(progress);
 	})
 };
