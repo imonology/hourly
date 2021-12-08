@@ -46,6 +46,13 @@ module.exports = {
 			type: 'date',
 			must: true,
 			show: true,
+			required: true,
+		},
+		choose_time_1: {
+			name: 'Time2',
+			type: 'date',
+			show: true,
+			required: true,
 		},
 		// choose_company:{
 		// 	name: 'Choose company',

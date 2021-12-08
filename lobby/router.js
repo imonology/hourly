@@ -712,8 +712,10 @@ module.exports = function (app) {
 		
 		account.find().populated();
 		let all_acc = account.data.fields[4].option;
+		console.log(all_acc)
 		let login_acc = all_acc.find( ({ value }) => value === found_account );
-
+		
+		console.log('login_acc' + JSON.stringify(login_acc))
 		switch (login_acc.roles[0]) {
 			case 'pm':
 				p_controller.find({ query: { pm: found_account } });
@@ -749,10 +751,10 @@ module.exports = function (app) {
 		}
 		
 		let option = Object.keys(d_controller.data.values).map((elem, i, arr) => {
-			return { text: d_controller.data.values[elem].applicant, value: elem }
+			return { text: d_controller.data.values[elem].applicant, value: d_controller.data.values[elem].applicant }
 		})
 		let organization = Object.keys(o_controller.data.values).map((elem, i, arr) => {
-			return { text: o_controller.data.values[elem].company_name, value: elem }
+			return { text: o_controller.data.values[elem].company_name, value: o_controller.data.values[elem].company_name }
 		})
 		
 		for (let i in p_controller.data.fields) {
@@ -818,10 +820,10 @@ module.exports = function (app) {
 		}
 		
 		let option = Object.keys(d_controller.data.values).map((elem, i, arr) => {
-			return { text: d_controller.data.values[elem].applicant, value: elem }
+			return { text: d_controller.data.values[elem].applicant, value: d_controller.data.values[elem].applicant }
 		})
 		let organization = Object.keys(o_controller.data.values).map((elem, i, arr) => {
-			return { text: o_controller.data.values[elem].company_name, value: elem }
+			return { text: o_controller.data.values[elem].company_name, value: o_controller.data.values[elem].company_name }
 		})
 		
 		for (let i in p_controller.data.fields) {
@@ -1105,8 +1107,9 @@ module.exports = function (app) {
 
 				salary_sum_record.create(sum_record)
 				}
-			}			
+			}
 		
 		res.send(progress);
+		//res.redirect('/salary_sum_record/list');
 	})
 };
