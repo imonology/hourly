@@ -1,8 +1,8 @@
 module.exports = {
-	name: '每小時費用',
+	name: 'Hourly fee',
 	fields: {
-		role: {
-			name: '身份別',
+		identity: {
+			name: 'Identity',
 			type: 'string',
 			desc: '',
 			unique: true,
@@ -11,7 +11,7 @@ module.exports = {
 			required: true,
 		},
 		hourly_rate: {
-			name: '費用',
+			name: 'Cost',
 			type: 'number',
 			desc: '',
 			unique: true,
@@ -20,7 +20,7 @@ module.exports = {
 			required: true,
 		},
 		desc: {
-			name: '說明',
+			name: 'Explanation',
 			type: 'textarea',
 			row: 5,
 			desc: '',

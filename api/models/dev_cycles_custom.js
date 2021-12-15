@@ -1,27 +1,25 @@
 module.exports = {
-	name: 'dev cycle',
+	name: 'Dev cycle',
 	fields: {
-		applicant: {
+		project: {
 			name: 'Cycle name',
 			type: 'string',
 			desc: '',
-			must: true,
 			show: true,
 			required: true,
 		},
-		description: {
+		desc: {
 			name: 'Description',
-			type: 'string',
+			type: 'textarea',
+			row: 5,
 			desc: '',
-			must: true,
 			show: true,
-			required: false,
+			require: false
 		},
 		pm_hour: {
 			name: 'PM hour',
 			type: 'number',
 			desc: '',
-			must: true,
 			show: true,
 			required: false,
 		},
@@ -29,9 +27,9 @@ module.exports = {
 			name: 'Dev hour',
 			type: 'number',
 			desc: '',
-			must: true,
 			show: true,
 			required: false,
 		},
+		
 	},
 };

@@ -177,6 +177,7 @@ SR.Callback.onStart(function () {
 			SR.API.addDevice({ name: 'Camera9', IP: '163.22.32.199', port: 24567 });
 			SR.API.addDevice({ name: 'Camera lobby', IP: '192.168.5.66', port: 21104 });
 			SR.API.addDevice({ name: 'DVRRR', IP: '10.32.21.193', port: 30057 });
+			SR.API.addDevice({ name: 'TEST', IP: '123.234.345.456', port: 34532 });
 		}
 	});
 

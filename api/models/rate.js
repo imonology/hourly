@@ -2,38 +2,13 @@ module.exports = {
 	name: 'rate',
 	fields: {
 		roles: { 
-			name: 'roles',
-			type: 'choice',
+			name: 'role',
+			type: 'string',
 			desc: '',
 			must: true,
 			show: true,
-			required: false,
-			option: [
-				{
-					value: 'PM',
-					text: 'PM',
-					id: '1',
-					desc: 'Project manager',
-				},
-				{
-					value: 'Dev',
-					text: 'Dev',
-					id: '2',
-					desc: 'Developer',
-				},
-				{
-					value: 'Marketing',
-					text: 'Marketing',
-					id: '3',
-					desc: 'Marketing',
-				},
-				{
-					value: 'Intern',
-					text: 'Intern',
-					id: '4',
-					desc: 'Intern',
-				},
-			],
+			required: true,
+			unique: true,
 		},
 		desc: {
 			name: 'description',
@@ -50,7 +25,8 @@ module.exports = {
 			desc: '',
 			must: true,
 			show: true,
-			require: true
+			require: true,
+			unique: true,
 		}
 	}
 };
