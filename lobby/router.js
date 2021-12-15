@@ -426,13 +426,13 @@ module.exports = function (app) {
 				children: [
 					{
 						path: 'create',
-						name: 'Create organization',
+						name: 'Create Orgs',
 						type: 'create',
 						props: {
 							edit: true,
 						},
 						meta: {
-							title: 'Organizaion',
+							title: 'Create Orgs',
 							icon: 'edit',
 							form_name: 'organization',
 							roles: ['admin'],
@@ -440,13 +440,13 @@ module.exports = function (app) {
 					},
 					{
 						path: 'list',
-						name: 'Organization list',
+						name: 'List Orgs',
 						type: 'list',
 						props: {
 							edit: true,
 						},
 						meta: {
-							title: 'Organizaion',
+							title: 'List Orgs',
 							icon: 'edit',
 							roles: ['admin'],
 						},

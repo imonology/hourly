@@ -2,18 +2,31 @@ module.exports = {
 	name: 'progress',
 	fields: {
 		project: {
-			name: 'Project',
-			type: 'choice',
-			desc: '',
-			must: true,
-			show: true,
-			required: true,
+				
+			//name: 'Project',
+			//type: 'choice',
+			//desc: '',
+			//must: true,
+			//show: true,
+			//required: true,
 			// option: {
 			// 	form: 'project',
 			// 	query: {},
 			// 	value: 'project_name',
 			// 	text: 'project_name',
 			// }
+            name: 'Project',
+            type: 'choice',
+            desc: '',
+            option: {
+               form: 'Project',
+               value: 'Project',
+               text: 'Project',
+            },
+
+			must: true,
+            show: true,
+            required: true,
 		},
 		// member1: {
 		// 	name: 'Member',
