@@ -22,6 +22,6 @@
 	"homepage": "https://github.com/imonology/scalra",
 	"dependencies": {
 		"scalra": "2.0.0",
-		"scalra-flexform": "2.0.3"
+		"scalra-flexform": "^2.0.3"
 	}
 }
