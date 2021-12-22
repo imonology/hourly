@@ -554,11 +554,11 @@ module.exports = function (app) {
 			if( progress.data.fields[i].id === 'project' ) {
 				progress.data.fields[i].option = new_option;
 			}
-			if( progress.data.fields[i].id === 'Approve' && member.roles === 'pm' ) {
+			if( progress.data.fields[i].id === 'Approve' && (member.roles === 'pm'||member.roles === 'admin') ) {
 				progress.data.fields[i].show = true;
 			}
-			if( progress.data.fields[i].id === 'Approve' && member.roles != 'pm' ) {
-				progress.data.fields[i].show = false;
+			if( progress.data.fields[i].id === 'Approve' && (member.roles !== 'pm'&&member.roles !== 'admin') ) {
+				progress.data.fields[i].show = true;//for displaying in /progrss/update
 			}
 		}
 		
