@@ -101,14 +101,6 @@ module.exports = {
 			show:  false,
 			default: false,
 		},
-		test: {
-			name: '課程代碼',
-			type: 'choice',
-			collection: 'project',
-			require: true,
-			option_text: 'project_name',
-			required: false
-		}
 		
 	}
 };
