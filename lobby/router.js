@@ -199,7 +199,7 @@ module.exports = function (app) {
 							edit: true,
 						},
 						meta: {
-							title: 'Set Track',
+							title: 'Report',
 							icon: 'edit',
 							form_name: 'progress',
 							isUpdate: false,
@@ -215,7 +215,7 @@ module.exports = function (app) {
 							edit: true,
 						},
 						meta: {
-							title: 'Track List',
+							title: 'List',
 							icon: 'edit',
 							roles: ['pm', 'admin', 'client', 'developer'],
 							// extra_btn: [
