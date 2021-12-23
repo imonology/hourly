@@ -558,7 +558,7 @@ module.exports = function (app) {
 				progress.data.fields[i].show = true;
 			}
 			if( progress.data.fields[i].id === 'Approve' && (member.roles !== 'pm'&&member.roles !== 'admin') ) {
-				progress.data.fields[i].show = true;//for displaying in /progrss/update
+				progress.data.fields[i].show = false;//for displaying in /progrss/update
 			}
 		}
 		
