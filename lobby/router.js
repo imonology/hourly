@@ -231,7 +231,9 @@ module.exports = function (app) {
 					},
 				],
 			},
+			//start
 			{
+
 				path: '/salary_filter',
 				redirect: '/salary_filter',
 				name: 'salary track',
@@ -250,14 +252,15 @@ module.exports = function (app) {
 						meta: {
 							title: 'Salary Filter',
 							icon: 'edit',
-							isUpdate: false,
+							isUpdate: true,
 							roles: ['admin'],
-							submitUrl: '/api/salary_filter'
+							submitUrl: '/api/salary_filter',
+							redirect: '/salary_sum_record/list',
 						},
 					},
 				],
 			},
-
+			//end
 			{
 				path: '/salary_sum_record',
 				redirect: '/salary_sum_record',
@@ -292,9 +295,9 @@ module.exports = function (app) {
 						meta: {
 							title: 'Salary List',
 							icon: 'edit',
-							isUpdate: false,
+							isUpdate: true,
 							roles: ['admin'],
-							// schemaUrl: '/api/salary_sum_record',
+							schemaUrl: '/api/salary_sum_record',
 						},
 					},
 				],
