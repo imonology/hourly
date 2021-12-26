@@ -42,14 +42,14 @@ module.exports = {
 			],
 		},
 		choose_time: {
-			name: 'Time',
+			name: 'Start',
 			type: 'date',
 			must: true,
 			show: true,
 			required: true,
 		},
 		choose_time_1: {
-			name: 'Time2',
+			name: 'End',
 			type: 'date',
 			show: true,
 			required: true,

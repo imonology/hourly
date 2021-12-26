@@ -62,12 +62,14 @@ module.exports = {
 			type: 'datetime',
 			must: true,
 			show: true,
+			required: true,
 		},
 		End_time: {
 			name: 'End Time',
 			type: 'datetime',
 			must: true,
 			show: true,
+			required: true,
 		},
 		Complete_the_project:{
 			name: 'Complete project',
@@ -76,6 +78,7 @@ module.exports = {
 			desc: '',
 			must: true,
 			show: true,
+			required: true,
 		},
 		Remarks:{
 			name: 'Remarks',
