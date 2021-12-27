@@ -255,7 +255,8 @@ module.exports = function (app) {
 							isUpdate: true,
 							roles: ['admin'],
 							submitUrl: '/api/salary_filter',
-							redirect: '/salary_sum_record/list',
+							afterSubmit: '/salary_sum_record/list',
+							// redirect: '/salary_sum_record/list',
 						},
 					},
 				],
@@ -883,33 +884,33 @@ module.exports = function (app) {
 		res.send(controller);
 	})
 	
-// 	app.get('/api/salary_sum_record', (req, res, next) => {
-// 		// let salary_filter = new SR.Flexform.controller('salary_filter')
-// 		let salary_sum_record = new SR.Flexform.controller('salary_sum_record')
-// 		let project = new SR.Flexform.controller('project')
-// 		let proj_list = []
+	app.get('/api/salary_sum_record', (req, res, next) => {
+		let salary_filter = new SR.Flexform.controller('salary_filter')
+		let salary_sum_record = new SR.Flexform.controller('salary_sum_record')
+		let project = new SR.Flexform.controller('project')
+		let proj_list = []
 		
-// 		project.find()
-// 		Object.keys(project.data.values).forEach(id => {
-// 			proj_list.push(project.data.values[id].project_name)
-// 		})
+		project.find()
+		Object.keys(project.data.values).forEach(id => {
+			proj_list.push(project.data.values[id].project_name)
+		})
 		
-// 		console.log(proj_list)
-// 		// salary_filter.find({query: {}})
+		console.log(proj_list)
+		salary_filter.find({query: {}})
 		
-// 		// Object.keys(salary_filter.data.values).forEach(id => {
-// 		// 	console.log(JSON.stringify(salary_filter.data.values[id]))
-// 		// 	if (salary_filter.data.values[id].sort_settings === 'dev') {
-// 		// 		salary_sum_record.find({ query: {project: ''} });	
-// 		// 	}
-// 		// 	if (salary_filter.data.values[id].sort_settings === 'project') {
-// 		// 		salary_sum_record.find({ query: {project: proj_list}});
-// 		// 	}
-// 		// })
-// 		salary_sum_record.find({ query: {} });	
+		Object.keys(salary_filter.data.values).forEach(id => {
+			console.log(JSON.stringify(salary_filter.data.values[id]))
+			if (salary_filter.data.values[id].sort_settings === 'dev') {
+				salary_sum_record.find({ query: {project: ''} });	
+			}
+			if (salary_filter.data.values[id].sort_settings === 'project') {
+				salary_sum_record.find({ query: {project: proj_list}});
+			}
+		})
+		salary_sum_record.find({ query: {} });	
 		
-// 		res.send(salary_sum_record)
-// 	})
+		res.send(salary_sum_record)
+	})
 
 	app.post('/api/salary_filter', (req, res, next) => {
 		let filter = req.body
