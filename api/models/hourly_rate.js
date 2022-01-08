@@ -2,7 +2,7 @@ module.exports = {
 	name: 'Hourly fee',
 	fields: {
 		identity: {
-			name: 'Identity',
+			name: 'Role',
 			type: 'string',
 			desc: '',
 			unique: true,

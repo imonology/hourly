@@ -38,38 +38,38 @@ var l_checkLogin = function (req) {
 };
 
 let time_calculation = function (start, end) {
-	const hours = (end.getTime() - start.getTime())/3600000
+	const hours = (end.getTime() - start.getTime()) / 3600000
 	return (hours.toFixed(2))
 }
 
-let getWeekNumber = function(date) {
+let getWeekNumber = function (date) {
 	let d = new Date(date)
-    d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
-    d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay()||7));
-    // Get first day of year
-    var yearStart = new Date(Date.UTC(d.getUTCFullYear(),0,1));
-    // Calculate full weeks to nearest Thursday
-    var weekNo = Math.ceil(( ( (d - yearStart) / 86400000) + 1)/7);
-    // Return array of year and week number
+	d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+	d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
+	// Get first day of year
+	var yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+	// Calculate full weeks to nearest Thursday
+	var weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+	// Return array of year and week number
 	// console.log(weekNo)
-    return {year: d.getUTCFullYear(), week: weekNo};
+	return { year: d.getUTCFullYear(), week: weekNo };
 }
-	
-let isSameWeek = function(date1, date2) {
+
+let isSameWeek = function (date1, date2) {
 	let week1 = getWeekNumber(date1)
 	let week2 = getWeekNumber(date2)
-	if(week1.year === week2.year && week1.week === week2.week){
+	if (week1.year === week2.year && week1.week === week2.week) {
 		return true
 	}
 	else {
 		return false
-	} 
+	}
 }
 
-let isSameMonth = function(date1, date2) {
+let isSameMonth = function (date1, date2) {
 	let month1 = new Date(date1)
 	let month2 = new Date(date2)
-	if(month1.getYear() == month2.getYear() && month1.getMonth() == month2.getMonth()) {
+	if (month1.getYear() == month2.getYear() && month1.getMonth() == month2.getMonth()) {
 		return true
 	}
 	else {
@@ -327,23 +327,23 @@ module.exports = function (app) {
 			// 				// submitUrl: '/api/info',
 			// 			},
 			// 		},
-					// {
-					// 	path: 'info',
-					// 	name: 'Personal information',
-					// 	type: 'create',
-					// 	props: {
-					// 		edit: true,
-					// 	},
-					// 	meta: {
-					// 		title: 'Personal information',
-					// 		icon: 'edit',
-					// 		// roles: ['c1'], // 此處還需要修改，只能讓登入者看到自己的帳號，且不可刪除
-					// 		/* IMPORTANT: update page needs to upgrade to newest version of flexform (aea2a846) to get this feature below! */
-					// 		// schemaUrl: '/api/project',
-					// 		// submitUrl: '/api/info',
-					// 		roles: ['pm'],
-					// 	},
-					// },
+			// {
+			// 	path: 'info',
+			// 	name: 'Personal information',
+			// 	type: 'create',
+			// 	props: {
+			// 		edit: true,
+			// 	},
+			// 	meta: {
+			// 		title: 'Personal information',
+			// 		icon: 'edit',
+			// 		// roles: ['c1'], // 此處還需要修改，只能讓登入者看到自己的帳號，且不可刪除
+			// 		/* IMPORTANT: update page needs to upgrade to newest version of flexform (aea2a846) to get this feature below! */
+			// 		// schemaUrl: '/api/project',
+			// 		// submitUrl: '/api/info',
+			// 		roles: ['pm'],
+			// 	},
+			// },
 			// 	],
 			// },
 			{
@@ -467,7 +467,7 @@ module.exports = function (app) {
 		let p_controller = new SR.Flexform.controller('project')
 		const found_account = l_checkLogin(req).account;
 		p_controller.findOne({ query: { account: found_account } });
-		
+
 		if (Object.keys(p_controller.data.values).length === 0) {
 			p_controller = JSON.parse(JSON.stringify(p_controller.find()));
 			p_controller.data.values = {};
@@ -475,26 +475,26 @@ module.exports = function (app) {
 
 		res.send(p_controller)
 	})
-	
+
 	app.get('/api/progress', (req, res, next) => {
 		let project = new SR.Flexform.controller('project');
 		let progress = new SR.Flexform.controller('progress');
 		let account = new SR.Flexform.controller('progress');
-		
+
 		const found_account = l_checkLogin(req).account;
 
 		account.find().populated();
-		
+
 		let all_acc = account.data.fields[1].option;
-		let acc_role = all_acc.find( ({ value }) => value === found_account ).roles[0];
-		
+		let acc_role = all_acc.find(({ value }) => value === found_account).roles[0];
+
 		project.find({ query: {} });
-		
+
 		let member = {}
-		for(let i in account.data.fields) {
-			if(('model' in account.data.fields[i]) && account.data.fields[i].model === '_account'){
-				for(let j in account.data.fields[i].option) {
-					if(account.data.fields[i].option[j].value === found_account) {
+		for (let i in account.data.fields) {
+			if (('model' in account.data.fields[i]) && account.data.fields[i].model === '_account') {
+				for (let j in account.data.fields[i].option) {
+					if (account.data.fields[i].option[j].value === found_account) {
 						member = {
 							value: account.data.fields[i].option[j].value,
 							text: account.data.fields[i].option[j].text,
@@ -505,136 +505,136 @@ module.exports = function (app) {
 			}
 		}
 		console.log(member);
-		
+
 		let new_option = [];
 		for (let i in project.data.values) {
-			switch(acc_role){
+			switch (acc_role) {
 				case 'developer':
-					if(project.data.values[i].dev1 === found_account || project.data.values[i].dev2 === found_account || project.data.values[i].dev3 === found_account) {
+					if (project.data.values[i].dev1 === found_account || project.data.values[i].dev2 === found_account || project.data.values[i].dev3 === found_account) {
 						new_option.push({
 							value: project.data.values[i].project_name,
 							text: project.data.values[i].project_name,
 						});
 					};
 					break;
-				case 'pm' :
-					if(project.data.values[i].pm === found_account) {
+				case 'pm':
+					if (project.data.values[i].pm === found_account) {
 						new_option.push({
 							value: project.data.values[i].project_name,
 							text: project.data.values[i].project_name,
 						});
 					};
 					break;
-				case 'client': 
-					if(project.data.values[i].client1 === found_account || project.data.values[i].client3 === found_account ) {
+				case 'client':
+					if (project.data.values[i].client1 === found_account || project.data.values[i].client3 === found_account) {
 						new_option.push({
 							value: project.data.values[i].project_name,
 							text: project.data.values[i].project_name,
 						});
 					};
 					break;
-				default: 
+				default:
 					new_option.push({
 						value: project.data.values[i].project_name,
 						text: project.data.values[i].project_name,
 					});
 					break;
-			}	
+			}
 		}
 		let project_list = new_option.map(x => x.value);
-		if(member.roles === 'developer') {
-			progress.find({ query: { project: project_list, member: found_account} });
+		if (member.roles === 'developer') {
+			progress.find({ query: { project: project_list, member: found_account } });
 		}
 		else {
-			progress.find({ query: { project: project_list }});
+			progress.find({ query: { project: project_list } });
 		}
-				
-		if(Object.keys(progress.data.values).length === 0) {
+
+		if (Object.keys(progress.data.values).length === 0) {
 			progress = JSON.parse(JSON.stringify(progress.find()));
 			progress.data.values = {};
 		}
-		
-		for(let i in progress.data.fields) {
-			if( progress.data.fields[i].id === 'project' ) {
+
+		for (let i in progress.data.fields) {
+			if (progress.data.fields[i].id === 'project') {
 				progress.data.fields[i].option = new_option;
 			}
-			if( progress.data.fields[i].id === 'Approve' && (member.roles === 'pm'||member.roles === 'admin') ) {
+			if (progress.data.fields[i].id === 'Approve' && (member.roles === 'pm' || member.roles === 'admin')) {
 				progress.data.fields[i].show = true;
 			}
-			if( progress.data.fields[i].id === 'Approve' && (member.roles !== 'pm'&&member.roles !== 'admin') ) {
+			if (progress.data.fields[i].id === 'Approve' && (member.roles !== 'pm' && member.roles !== 'admin')) {
 				progress.data.fields[i].show = false;//for displaying in /progrss/update
 			}
 		}
-		
+
 		res.send(progress);
 	})
-	
+
 	app.post('/api/progress', (req, res, next) => {
 		let account = new SR.Flexform.controller('progress');
 		let progress = new SR.Flexform.controller('progress');
 		let salary_record = new SR.Flexform.controller('salary_sheet');
-			
+
 		const found_account = l_checkLogin(req).account;
-		
+
 		account.find().populated();
-		progress.find();		
+		progress.find();
 
 		let all_acc = account.data.fields[1].option;
-		let acc_role = all_acc.find( ({value}) => value === found_account).roles[0];
-		
+		let acc_role = all_acc.find(({ value }) => value === found_account).roles[0];
+
 		let member = {}
-		for(let i in account.data.fields) {
-			if(('model' in account.data.fields[i]) && account.data.fields[i].model === '_account'){
-				for(let j in account.data.fields[i].option) {
-					if(account.data.fields[i].option[j].value === found_account) {
+		for (let i in account.data.fields) {
+			if (('model' in account.data.fields[i]) && account.data.fields[i].model === '_account') {
+				for (let j in account.data.fields[i].option) {
+					if (account.data.fields[i].option[j].value === found_account) {
 						member = {
 							value: account.data.fields[i].option[j].value,
 							text: account.data.fields[i].option[j].text,
 							roles: account.data.fields[i].option[j].roles[0],
 						}
-						if(account.data.fields[i].id === 'Approve' && member.roles === 'pm') {
+						if (account.data.fields[i].id === 'Approve' && member.roles === 'pm') {
 							account.data.fields[i].show = true;
 						}
 					}
 				}
 			}
 		}
-		
+
 		const submitData = req.body;
 		// console.log('body' + submitData);
 		submitData.member = found_account;
 		progress.create(submitData);
-		
-		progress.find({query: { member: found_account }});
+
+		progress.find({ query: { member: found_account } });
 		console.log(JSON.stringify(progress.data));
 		res.send(progress.data.values);
 	})
-	
+
 	app.get('/api/progress/schema', (req, res, next) => {
 		let project = new SR.Flexform.controller('project');
 		let progress = new SR.Flexform.controller('progress');
 		let account = new SR.Flexform.controller('progress');
-		
+
 		const found_account = l_checkLogin(req).account;
 
 		account.find().populated();
-		
+
 		let all_acc = account.data.fields[1].option;
-		let acc_role = all_acc.find( ({ value }) => value === found_account ).roles[0];
-				
-		project.find({ query: {} });		
-		
+		let acc_role = all_acc.find(({ value }) => value === found_account).roles[0];
+
+		project.find({ query: {} });
+
 		let member = {}
-		for(let i in account.data.fields) {
-			if(('model' in account.data.fields[i]) && account.data.fields[i].model === '_account'){
-				for(let j in account.data.fields[i].option) {
-					if(account.data.fields[i].option[j].value === found_account) {
+		for (let i in account.data.fields) {
+			if (('model' in account.data.fields[i]) && account.data.fields[i].model === '_account') {
+				for (let j in account.data.fields[i].option) {
+					if (account.data.fields[i].option[j].value === found_account) {
 						member = {
 							value: account.data.fields[i].option[j].value,
 							text: account.data.fields[i].option[j].text,
 							roles: account.data.fields[i].option[j].roles[0],
 						}
-						if(account.data.fields[i].id === 'Approve' && member.roles === 'pm') {
+						if (account.data.fields[i].id === 'Approve' && member.roles === 'pm') {
 							account.data.fields[i].show = true;
 						}
 					}
@@ -642,35 +642,35 @@ module.exports = function (app) {
 			}
 		}
 		// console.log(member);
-		
+
 		let new_option = [];
 		for (let i in project.data.values) {
-			switch(acc_role){
+			switch (acc_role) {
 				case 'developer':
-					if(project.data.values[i].dev1 === found_account || project.data.values[i].dev2 === found_account || project.data.values[i].dev3 === found_account) {
+					if (project.data.values[i].dev1 === found_account || project.data.values[i].dev2 === found_account || project.data.values[i].dev3 === found_account) {
 						new_option.push({
 							value: project.data.values[i].project_name,
 							text: project.data.values[i].project_name,
 						});
 					};
 					break;
-				case 'pm' :
-					if(project.data.values[i].pm === found_account) {
+				case 'pm':
+					if (project.data.values[i].pm === found_account) {
 						new_option.push({
 							value: project.data.values[i].project_name,
 							text: project.data.values[i].project_name,
 						});
 					};
 					break;
-				case 'client': 
-					if(project.data.values[i].client1 === found_account || project.data.values[i].client3 === found_account ) {
+				case 'client':
+					if (project.data.values[i].client1 === found_account || project.data.values[i].client3 === found_account) {
 						new_option.push({
 							value: project.data.values[i].project_name,
 							text: project.data.values[i].project_name,
 						});
 					};
 					break;
-				default: 
+				default:
 					new_option.push({
 						value: project.data.values[i].project_name,
 						text: project.data.values[i].project_name,
@@ -679,30 +679,30 @@ module.exports = function (app) {
 			}
 		}
 		let project_list = new_option.map(x => x.value);
-		if(member.roles === 'developer') {
-			progress.find({ query: { project: project_list, member: found_account} });
+		if (member.roles === 'developer') {
+			progress.find({ query: { project: project_list, member: found_account } });
 		}
 		else {
-			progress.find({ query: { project: project_list }});
+			progress.find({ query: { project: project_list } });
 		}
-				
-		if(Object.keys(progress.data.values).length === 0) {
+
+		if (Object.keys(progress.data.values).length === 0) {
 			progress = JSON.parse(JSON.stringify(progress.find()));
 			progress.data.values = {};
 		}
-		
-		for(let i in progress.data.fields) {
-			if( progress.data.fields[i].id === 'project') {
+
+		for (let i in progress.data.fields) {
+			if (progress.data.fields[i].id === 'project') {
 				progress.data.fields[i].option = new_option;
 			}
-			if( progress.data.fields[i].id === 'Approve' && member.roles === 'pm' ) {
+			if (progress.data.fields[i].id === 'Approve' && member.roles === 'pm') {
 				progress.data.fields[i].show = true;
 			}
-			if( progress.data.fields[i].id === 'Approve' && member.roles != 'pm' ) {
+			if (progress.data.fields[i].id === 'Approve' && member.roles != 'pm') {
 				progress.data.fields[i].show = false;
 			}
 		}
-		
+
 		res.send(progress);
 	});
 
@@ -711,14 +711,14 @@ module.exports = function (app) {
 		let d_controller = new SR.Flexform.controller('dev_cycles')
 		let o_controller = new SR.Flexform.controller('organization')
 		let account = new SR.Flexform.controller('project')
-		
+
 		const found_account = l_checkLogin(req).account;
-		
+
 		account.find().populated();
 		let all_acc = account.data.fields[4].option;
 		console.log(all_acc)
-		let login_acc = all_acc.find( ({ value }) => value === found_account );
-		
+		let login_acc = all_acc.find(({ value }) => value === found_account);
+
 		console.log('login_acc' + JSON.stringify(login_acc))
 		switch (login_acc.roles[0]) {
 			case 'pm':
@@ -726,18 +726,18 @@ module.exports = function (app) {
 				break;
 			// case 'dev': 
 			// 	p_controller.find({ query: { dev1: found_account }})
-			default: 
-				p_controller.find({ query: { } });
+			default:
+				p_controller.find({ query: {} });
 				break;
-		}		
+		}
 		o_controller.find({});
 		d_controller.find({});
-		
-		for(let i in account.data.fields) {
-			if('model' in account.data.fields[i]) {
+
+		for (let i in account.data.fields) {
+			if ('model' in account.data.fields[i]) {
 				let new_option = [];
-				for(let j in account.data.fields[i].option) {
-					if(account.data.fields[i].desc === account.data.fields[i].option[j].roles[0]){
+				for (let j in account.data.fields[i].option) {
+					if (account.data.fields[i].desc === account.data.fields[i].option[j].roles[0]) {
 						new_option.push({
 							value: account.data.fields[i].option[j].value,
 							text: account.data.fields[i].option[j].text,
@@ -748,26 +748,26 @@ module.exports = function (app) {
 				account.data.fields[i].option = new_option;
 			}
 		}
-			
+
 		if (Object.keys(p_controller.data.values).length === 0) {
 			p_controller = JSON.parse(JSON.stringify(p_controller.find()));
 			p_controller.data.values = {};
 		}
-		
+
 		let option = Object.keys(d_controller.data.values).map((elem, i, arr) => {
 			return { text: d_controller.data.values[elem].applicant, value: d_controller.data.values[elem].applicant }
 		})
 		let organization = Object.keys(o_controller.data.values).map((elem, i, arr) => {
 			return { text: o_controller.data.values[elem].company_name, value: o_controller.data.values[elem].company_name }
 		})
-		
+
 		for (let i in p_controller.data.fields) {
-			if(p_controller.data.fields[i].id === 'sub_dev_cycle' ){
+			if (p_controller.data.fields[i].id === 'sub_dev_cycle') {
 				// p_controller.data.fields[i].fields.cycle.option = option
 				p_controller.data.fields[i].option = option
 
 			}
-			if(p_controller.data.fields[i].id === 'organization' ){
+			if (p_controller.data.fields[i].id === 'organization') {
 				// p_controller.data.fields[i].fields.cycle.option = option
 				p_controller.data.fields[i].option = organization
 
@@ -776,18 +776,18 @@ module.exports = function (app) {
 
 		res.send(p_controller);
 	});
-	
+
 	app.get('/api/project', (req, res, next) => {
 		let p_controller = new SR.Flexform.controller('project')
 		let d_controller = new SR.Flexform.controller('dev_cycles')
 		let o_controller = new SR.Flexform.controller('organization')
 		let account = new SR.Flexform.controller('project')
-		
+
 		const found_account = l_checkLogin(req).account;
-		
+
 		account.find().populated();
 		let all_acc = account.data.fields[4].option;
-		let login_acc = all_acc.find( ({ value }) => value === found_account );
+		let login_acc = all_acc.find(({ value }) => value === found_account);
 
 		switch (login_acc.roles[0]) {
 			case 'pm':
@@ -795,18 +795,18 @@ module.exports = function (app) {
 				break;
 			// case 'dev': 
 			// 	p_controller.find({ query: { dev1: found_account }})
-			default: 
-				p_controller.find({ query: { } });
+			default:
+				p_controller.find({ query: {} });
 				break;
 		}
 		o_controller.find({});
 		d_controller.find({});
-		
-		for(let i in account.data.fields) {
-			if('model' in account.data.fields[i]) {
+
+		for (let i in account.data.fields) {
+			if ('model' in account.data.fields[i]) {
 				let new_option = [];
-				for(let j in account.data.fields[i].option) {
-					if(account.data.fields[i].desc === account.data.fields[i].option[j].roles[0]){
+				for (let j in account.data.fields[i].option) {
+					if (account.data.fields[i].desc === account.data.fields[i].option[j].roles[0]) {
 						new_option.push({
 							value: account.data.fields[i].option[j].value,
 							text: account.data.fields[i].option[j].text,
@@ -817,26 +817,26 @@ module.exports = function (app) {
 				account.data.fields[i].option = new_option;
 			}
 		}
-			
+
 		if (Object.keys(p_controller.data.values).length === 0) {
 			p_controller = JSON.parse(JSON.stringify(p_controller.find()));
 			p_controller.data.values = {};
 		}
-		
+
 		let option = Object.keys(d_controller.data.values).map((elem, i, arr) => {
 			return { text: d_controller.data.values[elem].applicant, value: d_controller.data.values[elem].applicant }
 		})
 		let organization = Object.keys(o_controller.data.values).map((elem, i, arr) => {
 			return { text: o_controller.data.values[elem].company_name, value: o_controller.data.values[elem].company_name }
 		})
-		
+
 		for (let i in p_controller.data.fields) {
-			if(p_controller.data.fields[i].id === 'sub_dev_cycle' ){
+			if (p_controller.data.fields[i].id === 'sub_dev_cycle') {
 				// p_controller.data.fields[i].fields.cycle.option = option
 				p_controller.data.fields[i].option = option
 
 			}
-			if(p_controller.data.fields[i].id === 'organization' ){
+			if (p_controller.data.fields[i].id === 'organization') {
 				// p_controller.data.fields[i].fields.cycle.option = option
 				p_controller.data.fields[i].option = organization
 
@@ -844,7 +844,7 @@ module.exports = function (app) {
 		}
 
 		for (let i in p_controller.data.fields) {
-			if(p_controller.data.fields[i].id === 'sub_dev_cycle' ){
+			if (p_controller.data.fields[i].id === 'sub_dev_cycle') {
 				// p_controller.data.fields[i].fields.cycle.option = option
 				p_controller.data.fields[i].option = option
 			}
@@ -858,10 +858,10 @@ module.exports = function (app) {
 		// let acc = Object.keys(account.data)[0];
 		const found_account = l_checkLogin(req).account;
 		console.log(found_account);
-		
+
 		account.findOne({ query: { account: found_account } });
 		console.log('acc ' + Object.keys(account.data).length);
-		
+
 		res.send(account);
 	});
 
@@ -883,39 +883,52 @@ module.exports = function (app) {
 		}
 		res.send(controller);
 	})
-	
+
 	app.get('/api/salary_sum_record', (req, res, next) => {
 		let salary_filter = new SR.Flexform.controller('salary_filter')
+		let method = JSON.parse(JSON.stringify(l_accounts))
+		let account = new SR.Flexform.controller('_account')//all the accounts
 		let salary_sum_record = new SR.Flexform.controller('salary_sum_record')
 		let project = new SR.Flexform.controller('project')
 		let proj_list = []
-		let proj=[]
+		let proj = []
 		project.find()
 		Object.keys(project.data.values).forEach(id => {
 			proj_list.push(project.data.values[id].project_name)
 			proj.push(project.data.values[id])
 		})
-		console.log(proj)
-		console.log(proj_list)
+		// console.log(proj)
+		console.log("Get", method);
+		let acc = [];
+		Object.keys(method).forEach(method_id => {
+			if (method[method_id].control.groups[0] === "developer") {
+				acc.push({
+					member: method[method_id].account,
+					role: method[method_id].control.groups[0],
+				});
+			}
+		})
+		console.log(acc)
 		// console.log("salary_sum_record:",salary_sum_record);
-		salary_filter.find({query: {}})
-		
+		salary_filter.find({ query: {} })
+
 		Object.keys(salary_filter.data.values).forEach(id => {
 			console.log(JSON.stringify(salary_filter.data.values[id]))
 			if (salary_filter.data.values[id].sort_settings === 'dev') {
-				salary_sum_record.find({ query: {project: ''} });	
+				salary_sum_record.find({ query: { project: '' } });
 			}
 			if (salary_filter.data.values[id].sort_settings === 'project') {
-				salary_sum_record.find({ query: {project: proj_list}});
+				salary_sum_record.find({ query: { project: proj_list } });
 			}
 		})
-		salary_sum_record.find({ query: {} });	
-		
+		salary_sum_record.find({ query: {} });
+
 		res.send(salary_sum_record)
 	})
 
-	 app.post('/api/salary_filter',async  (req, res, next) => {
+	app.post('/api/salary_filter', async (req, res, next) => {
 		let filter = req.body
+		let hourly_rate = new SR.Flexform.controller('hourly_rate')
 		let salary_filter = new SR.Flexform.controller('salary_filter')
 		let progress = new SR.Flexform.controller('progress')
 		let salary_sheet = new SR.Flexform.controller('salary_sheet')
@@ -924,7 +937,7 @@ module.exports = function (app) {
 		let acc = [];
 		let project = new SR.Flexform.controller('project')
 		let proj_list = []
-		let proj=[]
+		let proj = []
 		//List project  
 		await project.find()
 		Object.keys(project.data.values).forEach(id => {
@@ -932,20 +945,21 @@ module.exports = function (app) {
 			proj.push(project.data.values[id])
 		})
 		console.log(proj_list)
-		console.log("Debo see here:",proj)
+		console.log("Debo see here:", proj)
+		console.log("Debo see here 2:", method)
 		// console.log("salary_sum_record:",salary_sum_record);
 		//List developer account
-		Object.keys(method).forEach(method_id => {
-			if(method[method_id].control.groups[0] === "developer"){
-				acc.push({
-					member: method[method_id].account,
-					role: method[method_id].control.groups[0],
-				});
-			}
-		})
-		
-		await progress.find({query: {member: acc.map(x => x.member), Approve: true}});
-		
+		// Object.keys(method).forEach(method_id => {
+		// 	if (method[method_id].control.groups[0] === "developer") {
+		// 		acc.push({
+		// 			member: method[method_id].account,
+		// 			role: method[method_id].control.groups[0],
+		// 		});
+		// 	}
+		// })
+
+		// await progress.find({ query: { member: acc.map(x => x.member), Approve: true } });
+
 		let values = progress.data.values
 		// console.log("progress debo:",progress)
 		// let pricing_method = 1000// TEST
@@ -954,40 +968,40 @@ module.exports = function (app) {
 		// let salary_progress_record = {}
 		let a = []
 		let b = []
-		
+
 		//delete salary_sheet which progress have been removed
-		salary_sheet.find({query: {}})
+		salary_sheet.find({ query: {} })
 		Object.keys(salary_sheet.data.values).forEach(id => {
-				a.push(salary_sheet.data.values[id].progress_id)
-			})
+			a.push(salary_sheet.data.values[id].progress_id)
+		})
 		Object.keys(values).forEach(id => {
-				b.push(id)
-			})
-		
+			b.push(id)
+		})
+
 		var difference = a.filter(x => b.indexOf(x) === -1);
 		console.log(difference);
-		
-		await salary_sheet.find({query: {progress_id: difference}})
-		
+
+		await salary_sheet.find({ query: { progress_id: difference } })
+
 		Object.keys(salary_sheet.data.values).forEach(id => {
-			let obj = { 
+			let obj = {
 				record_id: id
 			}
 			salary_sheet.destroy(obj)
 		})
-		
+
 		//create salary_sheet from progress record that have been approved
 		// Object.keys(values).forEach(async id => {
-			
+
 		// 	let time = time_calculation(
 		// 				new Date(values[id].Starting_time),
 		// 				new Date(values[id].End_time)
 		// 			)
 		// 	salary = (time * values[id].pricing_method)
 		// 	workload = time
-			
+
 		// 	let role = acc.find(x => x.member === values[id].member).role
-			
+
 		// 	salary_progress_record = {
 		// 			progress_id: id,
 		// 			project: values[id].project,
@@ -999,39 +1013,39 @@ module.exports = function (app) {
 		// 			start_time: values[id].Starting_time,
 		// 			end_time: values[id].End_time,		
 		// 	}
-					
+
 		// 	salary_sheet.findOne({query: {progress_id: id}});
 		// 	if(Object.keys(salary_sheet.data.values).length === 0) {
 		// 		await salary_sheet.create(salary_progress_record)		
 		// 	}
 		// })
-	
+
 		//delete previoud salary_filter and create new one 
-		salary_filter.find({query: {}})
+		salary_filter.find({ query: {} })
 		Object.keys(salary_filter.data.values).forEach(id => {
-				let obj = { 
-					record_id: id
-				}
-				salary_filter.destroy(obj)
-			})
+			let obj = {
+				record_id: id
+			}
+			salary_filter.destroy(obj)
+		})
 		salary_filter.create(filter)
-		
+
 		//delete all past salary_sum_record
 		salary_sum_record.find()
 		Object.keys(salary_sum_record.data.values).forEach(id => {
-				let obj = { 
-					record_id: id
-				}
-				salary_sum_record.destroy(obj)
-			})
+			let obj = {
+				record_id: id
+			}
+			salary_sum_record.destroy(obj)
+		})
 
 		//create new salary_sum_record according to filter 
-		salary_sheet.find({query: {}})
+		salary_sheet.find({ query: {} })
 		console.log('salary_sheet' + JSON.stringify(salary_sheet))
 		let salary_record = salary_sheet.data.values
 		let sum_record = {}
 		let list = []
-		
+
 		// if(filter.sort_settings === 'dev') {
 		// 	for (let i in acc) {
 		// 		let total_workload = 0
@@ -1078,52 +1092,68 @@ module.exports = function (app) {
 		// 		// }
 		// 	}
 		// }
-		
-		
-			if(filter.sort_settings === 'project') {
-				for(var j in proj) {
-					let total_workload_proj = 0
-					let total_salary_proj = 0
-					let project = undefined
-					Object.keys(salary_record).forEach(id => {
-						if(filter.time_setting === 'week') {
-							if(isSameWeek(filter.choose_time, salary_record[id].start_time) === true || isSameWeek(filter.choose_time, salary_record[id].end_time) === true) {
-								if(proj[j].project_name === salary_record[id].project){
-									total_workload_proj += salary_record[id].workload
-									total_salary_proj += (salary_record[id].salary)
-									project = salary_record[id].project
-								}
+
+
+		if (filter.sort_settings === 'project') {
+			for (var j in proj) {
+				let total_workload_proj = 0
+				let total_salary_proj = 0
+				let project = undefined
+				Object.keys(salary_record).forEach(id => {
+					if (filter.time_setting === 'week') {
+						if (isSameWeek(filter.choose_time, salary_record[id].start_time) === true || isSameWeek(filter.choose_time, salary_record[id].end_time) === true) {
+							if (proj[j].project_name === salary_record[id].project) {
+								total_workload_proj += salary_record[id].workload
+								total_salary_proj += (salary_record[id].salary)
+								project = salary_record[id].project
 							}
 						}
-						if(filter.time_setting === 'month') {
-							if(isSameMonth(filter.choose_time, salary_record[id].start_time) === true || isSameMonth(filter.choose_time, salary_record[id].end_time) === true) {
-									if(proj[j].project_name === salary_record[id].project){
-										total_workload_proj += salary_record[id].workload
-										total_salary_proj += (salary_record[id].salary)
-										project = salary_record[id].project
-									}
+					}
+					if (filter.time_setting === 'month') {
+						if (isSameMonth(filter.choose_time, salary_record[id].start_time) === true || isSameMonth(filter.choose_time, salary_record[id].end_time) === true) {
+							if (proj[j].project_name === salary_record[id].project) {
+								total_workload_proj += salary_record[id].workload
+								total_salary_proj += (salary_record[id].salary)
+								project = salary_record[id].project
 							}
 						}
-					})
-					let members=[proj[j].dev1,proj[j].dev2,proj[j].dev3];
-					for(var x of members){
-						if(x.length!==0){
-							sum_record = {
-								project: proj[j].project_name,
-								member: x,
-								workload: total_workload_proj,
-								salary: total_salary_proj,
-								identity: proj[j].identity,
-								pricing_method: proj[j].pricing_method,
+					}
+				})
+				let members = [proj[j].dev1, proj[j].dev2, proj[j].dev3];
+				for (var x of members) {
+					if (x.length !== 0) {
+						let acc1 = [];
+						Object.keys(method).forEach(method_id => {
+							if (method[method_id].account == x) {
+								acc1.push(method[method_id]);	
 							}
-		
+						})
+						var pricing_method=0;
+						Object.keys(salary_record).forEach(id => {
+							if (proj[j].project_name === salary_record[id].project) {
+								pricing_method=proj[j].pricing_method
+							}
+						})
+						
+						sum_record = {
+							project: proj[j].project_name,
+							member: acc1[0].data.name,
+							workload: total_workload_proj,
+							// salary: 2*total_workload_proj*pricing_method+pricing_method*total_workload_proj,
+							salary:total_salary_proj,
+							identity: acc1[0].control.groups[0],
+							// identity:salary_record[id],
+							// pricing_method: salary_record[id].pricing_method,
+							pricing_method:pricing_method,
+						}
+
 						salary_sum_record.create(sum_record)
-						}
-				
-			}
+					}
+
 				}
 			}
-		
+		}
+
 		res.send(progress);
 		// res.redirect('/salary_sum_record/list');
 	})
