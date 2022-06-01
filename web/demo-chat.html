@@ -17,6 +17,12 @@
 	var onConnect = function () {
 		SR.subscribe(channel, 100, onMessage);
 		SR.subscribe('lobby', 50, onMessage);
+		
+		/*
+		SR.API['_SR_SUBSCRIBE']({channel: channel, size: 100}, function (err, msg) {
+			// handle onMessage here....
+		})
+		*/
 				
 		// query current user's name, if available
 		SR.login('getaccount', {}, function (result) {

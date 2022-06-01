@@ -1,0 +1,68 @@
+module.exports = {
+	name: 'salary sum record',
+	fields: {
+		project: { 
+			name: 'Project',
+			type: 'string',
+			desc: '',
+			must: true,
+			show: true,
+			required: false,
+		},
+		member: {
+			name: 'Member',
+			type: 'string',
+			desc: '',
+			must: false,
+			show: false,
+		},
+		identity:{
+			name: 'Identity',
+			type: 'string',
+			desc: '',
+			must: true,
+			show: true,
+			required: false,
+		},
+		pricing_method :{
+			name: 'Pricing method',
+			type: 'number',
+			desc: '',
+			must: true,
+			show: true,
+			required: false,
+		},
+		workload :{
+			name: 'Workload',
+			type: 'number',
+			desc: '',
+			must: true,
+			show: true,
+			required: false,
+		},
+		ot:{
+			name: 'Overtime workload',
+			type: 'number',
+			desc: '',
+			must: true,
+			show: true,
+			required: false,
+		},
+		ot_pay:{
+			name: 'Overtime pay',
+			type: 'number',
+			desc: '',
+			must: true,
+			show: true,
+			required: false,
+		},
+		salary:{
+			name: 'Total Salary',
+			type: 'number',
+			desc: '',
+			must: true,
+			show: true,
+			required: false,
+		},
+	}
+};

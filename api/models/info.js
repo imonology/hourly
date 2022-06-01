@@ -2,7 +2,7 @@ module.exports = {
 	name: '基本資料',
 	fields: {
 		name: {
-			name: '姓名',
+			name: 'Name',
 			type: 'string',
 			desc: '',
 			unique: true,
@@ -11,7 +11,7 @@ module.exports = {
 			required: true,
 		},
 		person_id: {
-			name: '身份證字號',
+			name: 'Id number',
 			type: 'string',
 			desc: '',
 			unique: true,
@@ -20,7 +20,7 @@ module.exports = {
 			required: true,
 		},
 		sex: {
-			name: '性別',
+			name: 'Sex',
 			type: 'choice',
 			desc: '',
 			must: true,
@@ -46,7 +46,7 @@ module.exports = {
 			required: false,
 		},
 		address: {
-			name: '地址',
+			name: 'Address',
 			type: 'string',
 			desc: '',
 			must: true,
@@ -54,7 +54,7 @@ module.exports = {
 			required: false,
 		},
 		account: {
-			name: '帳號',
+			name: 'Account',
 			type: 'string',
 			desc: '',
 			must: false,
@@ -62,7 +62,7 @@ module.exports = {
 			required: false,
 		},
 		desc: {
-			name: '說明',
+			name: 'Description',
 			type: 'textarea',
 			row: 5,
 			desc: '',
