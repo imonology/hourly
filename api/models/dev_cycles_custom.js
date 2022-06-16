@@ -14,7 +14,7 @@ module.exports = {
 			row: 5,
 			desc: '',
 			show: true,
-			require: false
+			required: false
 		},
 		pm_hour: {
 			name: 'PM hour',

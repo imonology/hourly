@@ -16,7 +16,7 @@ module.exports = {
 			desc: '',
 			must: true,
 			show: true,
-			require: false
+			required: false
 		},
 		address: {
 			name: 'Address',

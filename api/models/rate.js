@@ -17,7 +17,7 @@ module.exports = {
 			desc: '',
 			must: true,
 			show: true,
-			require: false
+			required: false
 		},
 		pay: {
 			name: 'pay for role',
@@ -25,7 +25,7 @@ module.exports = {
 			desc: '',
 			must: true,
 			show: true,
-			require: true,
+			required: true,
 			unique: true,
 		}
 	}
