@@ -48,7 +48,6 @@ var config = {
 		{file: 'example/LOG.js'},
 		{file: 'example/upload.js'},
 		{file: 'example/API.js'},
-		{file: 'example/chat.js'},
 		//{file: 'example/DHT.js'},
     ],
 	// TODO: init core SR functions without using components		
@@ -63,7 +62,6 @@ var config = {
 	modules: {
 		// disable DB usage by default, uncomment if DB (currently MongoDB) is installed
 		'DB': {collections: collections, shutdown_if_fail: true},
-		'chat': {limit: 1000, backup: true},
 		'pubsub': {},
 		'express': {router: 'router.js'},
 		'flexform': {},	
